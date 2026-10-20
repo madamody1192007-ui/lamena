@@ -1,0 +1,1716 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!--
+=====================================================================
+  🎂 BIRTHDAY GIFT WEBSITE — TEMPLATE  /  قالب موقع هدية عيد ميلاد
+=====================================================================
+  HOW TO USE (3 steps) / الاستخدام:
+   1) Edit ONLY the CONFIG block right below (names, photos, messages, passwords).
+      عدّل بس في قسم CONFIG اللي تحت (الاسم، الصور، الرسايل، الباسوردات).
+   2) Open this file in a browser to preview it.
+      افتح الملف في المتصفح وشوف النتيجة.
+   3) Publish it anywhere (GitHub Pages, Netlify, Vercel, any static hosting).
+      انشره على أي استضافة (GitHub Pages / Netlify / Vercel ...).
+
+  IMAGES / الصور — every image field accepts ONE of these:
+     • a link:            'https://example.com/photo.jpg'
+     • a file next to it: 'photo1.jpg'   (put the file in the same folder)
+     • base64 data:       'data:image/jpeg;base64,....'
+     • empty '' → a placeholder (yellow emoji + "Photo N") is shown.
+
+  TEXT TOKENS: inside any text you can write {name} and {fullName}
+  and they are replaced automatically.
+
+  AI-EDITING PROMPT (copy/paste to any AI along with this file):
+    "Here is my birthday website template. Change the name to ___,
+     replace Photo 1 with ___, Photo 2 with ___, set the birthday
+     password to __/__/____, and rewrite the messages to ___.
+     Edit only the CONFIG block."
+=====================================================================
+-->
+<script>
+/* ===================================================================
+   ✏️  CONFIG — THE ONLY PART YOU NEED TO EDIT
+   =================================================================== */
+const CONFIG = {
+
+  /* ---------- 1) The person ---------- */
+  name:     'LAMENA',            // short name — used everywhere (levels, titles, messages)
+  fullName: 'M7war el koon',       // shown under the photo in the photo game
+
+  /* ---------- 2) Page texts ---------- */
+  pageTitle:     'Happy Birthday',                     // browser-tab title
+  heroTitle:     '✨Happy Birthday✨',                  // big title on the home page
+  heroSubtitle:  'This website was made with Love',    // text under the title
+
+  /* ---------- 3) The character (the cartoon / pixel person) ----------
+     Default = a yellow emoji. Change the emoji, or give an image
+     (a cartoon/avatar of the person) and it replaces the emoji everywhere
+     (intro, cups game, road game, flying game, birthday page).           */
+  character: {
+    emoji: '🙂',        // any emoji: '🙂' '😎' '🥳' '😺' ...
+    image: './IMG_5942.png'           // optional: link / file / base64 of a round-ish cartoon. '' = use the emoji
+  },
+
+  /* ---------- 4) Photos ---------- */
+  photos: {
+    main:   './IMG_5942.png',                    // 📷 Photo 1 — the birthday person (intro, birthday page, and the "correct answer" in the photo game)
+    other1: './IMG_9960.PNG',                    // 📷 Photo 2 — a wrong answer in the photo game
+    other2: './IMG_8618.PNG',                    // 📷 Photo 3 — a wrong answer in the photo game
+    other1Label: 'dumb choic',        // caption under Photo 2   (e.g. 'full moon')
+    other2Label: 'another dumb',        // caption under Photo 3   (e.g. 'the sun')
+    birthdayPage: ''               // optional different photo for the birthday page. '' = use Photo 1
+  },
+  photoQuestion: "Who's the best looking out of them?",   // the question in the photo game
+
+  /* ---------- 5) Home-page cards ---------- */
+  menu: {
+    card1:  { title: 'Happy Birthday my sister', text: 'hope you like it' },              // opens the birthday page (needs the birthday password)
+    locked: { title: 'Locked',         text: 'the password is a special date' },// opens the secret page (needs the secret password)
+    games:  { title: 'Mini Games',     text: 'Play and win your birthday gift' }
+  },
+  features: {
+    secretPage: true,    // false = hide the 🔒 Locked card and its page
+    miniGames:  true     // false = hide the 🎮 Mini Games card
+  },
+
+  /* ---------- 6) Passwords (dates) ---------- */
+  passwords: {
+    birthday: { day: 25, month: 8, year: 2005, question: "What's the best day of the year?" },
+    secret:   { day: 25, month: 8, year: 2005, question: "What's the second best day of the year?" }
+  },
+
+  /* ---------- 7) Messages (an empty line = a new paragraph) ---------- */
+  messages: {
+    birthday: `Happy birthday, {name}.
+
+I wish you a new year filled with success, laughter, and real progress toward your dreams.
+
+May you keep growing in every way possible, becoming wiser, happier, and more satisfied with each passing day.
+
+May your future be brighter than your past, with nothing to cloud your happiness or steal your peace.
+
+Take time to celebrate how far you've come, and get ready for an even better chapter ahead.
+
+Enjoy your special day!`,
+
+    secret: `Write your private message here.
+Every empty line starts a new paragraph.
+
+You can write as many paragraphs as you like.
+
+Happy birthday, {name}.
+I'm really glad you exist.
+
+Made with love`
+  },
+
+  /* ---------- 8) Secret page extras (all optional) ---------- */
+  song: {                                      // a song player. url '' = hide the whole song card
+    label:  'A song that reminds me of you 🎵',
+    title:  'كده كفايه',
+    artist: 'جورج وسوف',
+    url:    ''                                 // link or file next to this page, e.g. 'song.mp3'
+  },
+  deeds: {
+    doneTitle:  'Things I have done for you',
+    done: [                                    // add / remove lines freely
+      'making this page for you',
+      'trying to do my best for you',
+      'never leave you'
+    ],
+    wouldTitle: 'Things I would have done for you',
+    would:      'Everything',
+    note:       'There are far too many things to display here.'
+  },
+  quotes: {
+    first: ['', ''],       // ['', ''] = hide
+    last:  ['', '']    // ['', ''] = hide
+  },
+  keeping: {                                   // "things I'm still keeping" — photos with captions. [] = hide
+    title: "",
+    items: [ ]
+  },
+  extra: {                                     // a text + one wide image (e.g. a design/idea). both '' = hide
+    text: '',
+    image: ''                                  // Photo 6
+  },
+
+  /* ---------- 9) The prize at the end of the mini games ---------- */
+  gift: {
+    icon:        '🎁🎉',
+    heading:     'Congratulations!',
+    description: 'Here is your birthday gift 💚',
+    message:     'my love',
+    account:     '',        // optional — shows a copy-able "Account" row
+    password:    '',        // optional — shows a copy-able "Password" row
+    code:        '',        // optional — shows a copy-able "Code" row
+    deleteAfterClaim: false // true = after pressing "I've got it" the details are hidden on this browser
+  }
+};
+</script>
+
+<title>Birthday Template</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 100 100%27%3E%3Ctext y=%27.9em%27 font-size=%2790%27%3E%F0%9F%8E%82%3C/text%3E%3C/svg%3E">
+<meta property="og:title" content="Happy Birthday">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@1,500;1,600;1,700&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+<style>
+:root{--bg:radial-gradient(circle at center,#240a1d 0%,#0d030b 100%);--card:#330e29;--card-hover:#48143a;--gold:#e6c594;--text:#fceee9;--muted:#ca9ebb}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);background-attachment:fixed;color:var(--text);font-family:'Tajawal',sans-serif;min-height:100vh;display:flex;justify-content:center;align-items:center;padding:20px 20px 90px;overflow-x:hidden}
+#stars-container{position:fixed;inset:0;z-index:20;pointer-events:none}
+.falling-star{position:absolute;top:-30px;color:var(--gold);user-select:none;cursor:pointer;pointer-events:auto;animation:fall linear forwards;filter:drop-shadow(0 0 8px var(--gold));padding:12px;transition:transform .1s}
+.falling-star:hover{transform:scale(1.5)}
+@keyframes fall{0%{transform:translateY(0) rotate(0);opacity:1}100%{transform:translateY(105vh) rotate(360deg);opacity:.2}}
+.audio-player-widget{margin:30px auto 0;width:max-content;background:rgba(51,14,41,.95);border:1px solid var(--gold);border-radius:50px;padding:8px 18px;display:flex;align-items:center;gap:12px;box-shadow:0 8px 25px rgba(0,0,0,.6);backdrop-filter:blur(10px);max-width:90vw;pointer-events:auto}
+.player-btn{background:var(--gold);color:#150204;border:none;width:38px;height:38px;border-radius:50%;cursor:pointer;font-size:1rem;flex-shrink:0;transition:transform .2s,background .2s}
+.player-btn:hover{transform:scale(1.08);background:#fff}
+.song-info{display:flex;flex-direction:column;white-space:nowrap}
+.song-title{font-size:.85rem;font-weight:700;color:var(--gold)}
+.song-status{font-size:.72rem;color:var(--muted)}
+.main-container{width:100%;max-width:750px;text-align:center;position:relative;z-index:10;pointer-events:none}
+.main-container>*,.main-container a,.icon-card,.btn-back,.option-card,.catch-board{pointer-events:auto}
+.hero{margin-bottom:35px}
+.title{color:var(--gold);font-size:2.6rem;font-weight:700;margin-bottom:8px;text-shadow:0 4px 15px rgba(0,0,0,.6);letter-spacing:1px}
+.subtitle{color:var(--muted);font-size:1.15rem}
+.cards-layout{display:flex;flex-direction:column;align-items:center;gap:20px}
+.top-row{width:100%;max-width:320px}
+.bottom-row{width:100%;display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:20px}
+.icon-card{background:var(--card);border:1px solid rgba(230,197,148,.25);border-radius:20px;padding:28px 20px;text-decoration:none;color:var(--text);display:flex;flex-direction:column;align-items:center;transition:all .35s cubic-bezier(.4,0,.2,1);box-shadow:0 10px 25px rgba(0,0,0,.5);cursor:pointer}
+.icon-card:hover{transform:translateY(-8px);background:var(--card-hover);border-color:var(--gold);box-shadow:0 15px 30px rgba(230,197,148,.2)}
+.icon-avatar{width:70px;height:70px;border-radius:50%;background:rgba(230,197,148,.08);border:2px solid var(--gold);display:flex;justify-content:center;align-items:center;font-size:2rem;margin-bottom:18px;color:var(--gold);box-shadow:inset 0 0 10px rgba(230,197,148,.1)}
+.letter-n{font-weight:700;font-family:Arial,sans-serif;font-size:2.2rem}
+.icon-card h3{color:var(--gold);font-size:1.35rem;margin-bottom:8px}
+.icon-card p{color:var(--muted);font-size:.95rem;line-height:1.5}
+#catch-game-section,#game-section{display:none;flex-direction:column;align-items:center;width:100%}
+.game-title{color:var(--gold);font-size:2.2rem;margin-bottom:10px}
+.score-box{font-size:1.3rem;font-weight:700;color:#ff4d6d;margin-bottom:5px;background:rgba(51,14,41,.8);padding:8px 20px;border-radius:20px;border:1px solid var(--gold)}
+.game-tip{font-size:.85rem;color:#f87171;margin-bottom:15px}
+.catch-board{position:relative;width:100%;max-width:450px;height:350px;background:rgba(13,3,11,.7);border:2px dashed var(--gold);border-radius:20px;overflow:hidden;margin-bottom:15px}
+.falling-item{position:absolute;font-size:2.2rem;cursor:pointer;user-select:none;line-height:1}
+.game-subtitle{color:var(--muted);margin-bottom:25px;font-size:1.2rem;font-weight:700;direction:ltr}
+.images-grid{display:flex;justify-content:center;align-items:center;gap:15px;width:100%;margin-bottom:25px;flex-wrap:wrap}
+#result-modal .modal-card{direction:ltr}
+.cred-row{display:flex;flex-wrap:wrap;align-items:center;gap:6px 8px;background:rgba(0,0,0,.35);border:1px dashed var(--gold);border-radius:12px;padding:8px 10px;margin-bottom:10px;direction:ltr}
+.cred-label{font-size:.75rem;color:var(--muted);width:100%;text-align:left}
+.cred-val{flex:1;font-family:monospace;font-size:.84rem;color:var(--gold);font-weight:700;word-break:break-all;text-align:left}
+#prize-card .modal-title,#prize-card .modal-desc,#prize-title{direction:ltr}
+.pw-row{display:flex;gap:8px;justify-content:center;direction:ltr;margin:6px 0 12px;flex-wrap:wrap}
+.pw-select{background:var(--card);color:var(--text);border:1px solid var(--gold);border-radius:12px;padding:10px 8px;font-family:inherit;font-size:1rem;cursor:pointer;max-width:120px}
+.pw-error{color:#f87171;min-height:1.4em;font-size:.95rem;margin-bottom:6px;direction:ltr}
+.shake{animation:shakeX .45s}
+@keyframes shakeX{0%,100%{transform:translateX(0)}20%,60%{transform:translateX(-10px)}40%,80%{transform:translateX(10px)}}
+#birthday-section{display:none;flex-direction:column;align-items:center;width:100%}
+.cake{font-size:6rem;line-height:1;animation:floaty 2.4s ease-in-out infinite;margin:6px 0 14px}
+@keyframes floaty{0%,100%{transform:translateY(0)}50%{transform:translateY(-12px)}}
+.bday-msg{white-space:pre-line;font-size:1.15rem;line-height:1.9;max-width:400px;margin-bottom:22px;direction:ltr}
+#secret-section{display:none;flex-direction:column;align-items:center;width:100%}
+.secret-heart{font-size:5rem;line-height:1;animation:beat 1.4s ease-in-out infinite;filter:drop-shadow(0 0 18px rgba(255,60,80,.6));margin:10px 0 8px}
+/* ===== Song card ===== */
+.song-card{width:100%;max-width:440px;background:rgba(51,14,41,.82);border:1px solid rgba(230,197,148,.35);border-radius:22px;padding:22px 18px;box-shadow:0 12px 30px rgba(0,0,0,.45);margin-bottom:14px;text-align:center;direction:ltr}
+.song-label{font-family:'Cormorant Garamond',Georgia,serif;font-style:italic;font-weight:600;color:var(--gold);font-size:1.25rem;margin-bottom:16px}
+.song-row{display:flex;align-items:center;justify-content:center;gap:16px}
+.vinyl{position:relative;width:86px;height:86px;border-radius:50%;flex-shrink:0;background:repeating-radial-gradient(circle at center,#1a0615 0 3px,#0d030b 3px 5px);border:2px solid rgba(230,197,148,.6);box-shadow:0 0 22px rgba(230,197,148,.25);animation:spinDisc 5s linear infinite}
+.vinyl::before{content:'';position:absolute;inset:28px;border-radius:50%;background:radial-gradient(circle,#ff758f 0 30%,var(--gold) 31%)}
+.vinyl::after{content:'';position:absolute;left:50%;top:50%;width:8px;height:8px;margin:-4px 0 0 -4px;border-radius:50%;background:#0d030b}
+@keyframes spinDisc{to{transform:rotate(360deg)}}
+.song-meta{text-align:left}
+.song-name{font-family:'Tajawal',sans-serif;font-weight:700;font-size:1.5rem;color:var(--text);line-height:1.2;direction:rtl;text-align:left}
+.song-artist{font-size:.95rem;color:var(--muted);margin-top:4px;letter-spacing:1px}
+.eq{display:flex;align-items:flex-end;gap:3px;height:18px;margin-top:10px}
+.eq i{display:block;width:4px;background:var(--gold);border-radius:2px;animation:eqBar 1s ease-in-out infinite}
+.eq i:nth-child(2){animation-delay:.2s}.eq i:nth-child(3){animation-delay:.4s}.eq i:nth-child(4){animation-delay:.1s}.eq i:nth-child(5){animation-delay:.3s}
+@keyframes eqBar{0%,100%{height:4px}50%{height:18px}}
+.song-btn{display:inline-block;margin-top:18px;background:var(--gold);color:#150204;text-decoration:none;font-weight:700;padding:10px 26px;border-radius:25px;font-size:1rem;transition:transform .2s}
+.song-btn:hover{transform:translateY(-2px)}
+.song-btn{border:none;cursor:pointer;font-family:inherit}
+.song-card:not(.playing) .vinyl,.song-card:not(.playing) .eq i{animation-play-state:paused}
+/* ===== Closing quote ===== */
+.final-quote{width:100%;max-width:440px;text-align:center;direction:ltr;margin:4px 0 28px;padding:0 12px}
+.fq-orn{display:flex;align-items:center;justify-content:center;gap:12px;color:var(--gold);opacity:.85;margin-bottom:16px;font-size:.9rem}
+.fq-orn::before,.fq-orn::after{content:'';height:1px;width:64px;background:linear-gradient(90deg,transparent,var(--gold))}
+.fq-orn::after{transform:scaleX(-1)}
+.fq-l1,.fq-l2{font-family:'Cormorant Garamond',Georgia,serif;font-style:italic;font-weight:700;color:var(--gold);text-wrap:balance;text-shadow:0 0 20px rgba(230,197,148,.35)}
+.fq-l1{font-size:1.75rem;line-height:1.3}
+.fq-l2{font-size:1.5rem;line-height:1.3;margin-top:8px;opacity:.9}
+.fq-orn-bottom{margin:18px 0 0}
+/* ===== Things I'm still keeping ===== */
+.keeping{width:100%;max-width:440px;text-align:center;direction:ltr;margin-bottom:30px}
+.keeping-title{font-family:'Cormorant Garamond',Georgia,serif;font-style:italic;font-weight:600;color:var(--gold);font-size:1.4rem;line-height:1.3;margin-bottom:16px;text-wrap:balance}
+.keeping-row{display:flex;flex-wrap:wrap;gap:12px}
+.keep-item{flex:1 1 calc(50% - 6px);margin:0;min-width:0}
+.keep-frame{aspect-ratio:1280/878;display:flex;align-items:center;justify-content:center}
+.keep-frame img{width:100%;height:100%;object-fit:contain;filter:drop-shadow(0 8px 14px rgba(0,0,0,.55))}
+.keep-frame.card img{border-radius:10px;filter:drop-shadow(0 8px 14px rgba(0,0,0,.55))}
+.keep-frame.empty{border:1px dashed rgba(230,197,148,.5);border-radius:12px;background:rgba(0,0,0,.18)}
+.keep-item figcaption{margin-top:10px;font-family:'Cormorant Garamond',Georgia,serif;font-style:italic;font-weight:600;color:var(--gold);font-size:1rem}
+.tshirt-img{display:block;width:100%;border-radius:14px;border:1px solid rgba(230,197,148,.35);box-shadow:0 10px 26px rgba(0,0,0,.55);margin:0 0 18px}
+.tshirt-wrap{margin-top:0}
+.tshirt{font-family:'Cormorant Garamond',Georgia,serif;font-style:italic;font-weight:600;color:var(--text);font-size:1.25rem;line-height:1.5;text-wrap:balance;margin:0 0 16px}
+/* ===== Done-for-you / Would-have-done columns (secret page) ===== */
+.deeds{width:100%;max-width:440px;display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:26px;direction:ltr;align-items:start}
+.deed-col{background:rgba(51,14,41,.82);border:1px solid rgba(230,197,148,.35);border-radius:18px;padding:16px 12px;box-shadow:0 12px 30px rgba(0,0,0,.45);text-align:center}
+.deed-title{font-family:'Cormorant Garamond',Georgia,serif;font-style:italic;font-weight:600;color:var(--gold);font-size:1.1rem;line-height:1.3;margin-bottom:12px}
+.deed-slot{min-height:36px;display:flex;align-items:center;justify-content:center;border:1px solid rgba(230,197,148,.35);border-radius:10px;padding:10px 9px;margin-bottom:8px;font-size:.82rem;line-height:1.5;color:var(--text);background:rgba(0,0,0,.18)}
+.deed-slot.big{min-height:56px;font-family:'Cormorant Garamond',Georgia,serif;font-style:italic;font-weight:600;font-size:1.3rem;color:var(--gold);border-style:solid;box-shadow:0 0 18px rgba(230,197,148,.18)}
+.deed-more{display:flex;flex-direction:column;align-items:center;gap:2px;margin-top:6px;font-size:.85rem;color:var(--text)}
+.deed-count{color:var(--gold);font-weight:700}
+.deed-learn{background:none;border:none;padding:0;color:var(--gold);text-decoration:underline;cursor:pointer;font-family:inherit;font-size:.85rem}
+.deed-learn:hover{opacity:.8}
+.deed-note{display:none;margin-top:10px;font-size:.8rem;line-height:1.5;color:var(--muted);font-style:italic;animation:stanzaIn .6s ease forwards}
+.deed-note.show{display:block}
+@keyframes beat{0%,100%{transform:scale(1)}15%{transform:scale(1.15)}30%{transform:scale(1)}45%{transform:scale(1.1)}}
+#birthday-section{position:relative}
+.bday-deco{position:absolute;pointer-events:none}
+.bunting{width:100%;max-width:520px;height:70px;pointer-events:none}
+.balloon{position:absolute;width:44px;height:56px;border-radius:50% 50% 48% 48%;animation:balloonUp 4.2s ease-in-out infinite;pointer-events:none}
+.balloon::after{content:'';position:absolute;left:50%;top:100%;width:1.5px;height:46px;background:rgba(252,238,233,.55)}
+.balloon::before{content:'';position:absolute;left:10px;top:9px;width:9px;height:14px;border-radius:50%;background:rgba(255,255,255,.35);transform:rotate(20deg)}
+@keyframes balloonUp{0%,100%{transform:translateY(0) rotate(-3deg)}50%{transform:translateY(-14px) rotate(3deg)}}
+.cake-css{display:flex;flex-direction:column;align-items:center;margin:4px 0 12px}
+.candles{display:flex;gap:16px}
+.candles i{position:relative;width:6px;height:24px;border-radius:2px;background:repeating-linear-gradient(180deg,#fceee9 0 5px,#e6c594 5px 10px)}
+.candles i::before{content:'';position:absolute;left:-1px;top:-17px;width:8px;height:15px;border-radius:50% 50% 50% 50%/60% 60% 40% 40%;background:radial-gradient(circle at 50% 70%,#fff3b0,#ffb347 60%,#ff7a3d);animation:flame .5s ease-in-out infinite alternate;box-shadow:0 0 10px rgba(255,190,80,.8)}
+@keyframes flame{from{transform:scaleY(1) rotate(-3deg)}to{transform:scaleY(1.15) rotate(3deg)}}
+.tier{position:relative}
+.t1{width:104px;height:38px;background:#f4b6c6;border-radius:14px 14px 6px 6px}
+.t2{width:154px;height:48px;background:#8a1f4a;border-radius:12px 12px 8px 8px;margin-top:-2px}
+.tier::before{content:'';position:absolute;left:0;right:0;top:0;height:14px;border-radius:14px 14px 0 0;background:#fff3f1}
+.tier::after{content:'';position:absolute;left:8%;right:8%;top:22px;height:5px;border-radius:3px;background:rgba(230,197,148,.85)}
+.plate{width:190px;height:10px;border-radius:50%;background:linear-gradient(90deg,#b98f4f,#e6c594,#b98f4f);margin-top:-2px;box-shadow:0 6px 14px rgba(0,0,0,.5)}
+.bday-title{color:var(--gold);font-size:1.2rem;letter-spacing:3px;direction:ltr;margin-top:2px}
+.bday-name{font-family:'Cormorant Garamond',serif;font-style:italic;font-weight:600;color:var(--text);font-size:3rem;line-height:1.1;direction:ltr;text-shadow:0 4px 18px rgba(230,197,148,.45);margin-bottom:16px}
+.letter{width:100%;max-width:440px;background:rgba(51,14,41,.82);border:1px solid rgba(230,197,148,.35);border-radius:22px;padding:28px 22px;box-shadow:0 12px 30px rgba(0,0,0,.45);margin-bottom:26px}
+.stanza{font-family:'Cormorant Garamond',Georgia,serif;font-style:italic;font-weight:500;font-size:1.32rem;line-height:1.75;color:var(--text);direction:ltr;text-align:center;margin:0 0 20px;white-space:pre-line;opacity:0;animation:stanzaIn 1s ease forwards}
+.stanza.sign{color:var(--gold);font-weight:600;margin-bottom:0}
+@keyframes stanzaIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+.photo-frame{width:210px;height:280px;border:2px solid var(--gold);border-radius:18px;overflow:hidden;background:var(--card);box-shadow:0 0 34px rgba(230,197,148,.4),0 10px 25px rgba(0,0,0,.5);flex-shrink:0}
+.stage{position:relative;display:flex;align-items:flex-end;justify-content:center;gap:10px;width:100%;max-width:480px;padding-bottom:24px;margin-top:6px;opacity:0;animation:stanzaIn 1.2s ease forwards}
+.ground{position:absolute;left:0;right:0;bottom:0;height:24px;background:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAICAYAAADwdn+XAAAAVUlEQVR4nGOMFjL+z0ABYGFgYGDo3pwIF+ARlmD48vYFiiJ8YkzEKsQlxkSJZgYGBgZGSsOA8dONNf/x2VLqO5+he3MiTtcwkeNsZDGCgcjAwIDXQADIbEP0XRn80gAAAABJRU5ErkJggg==) repeat-x 0 0/48px 24px;image-rendering:pixelated;border-radius:0 0 6px 6px}
+.sprite-col{position:relative;width:104px;height:300px;flex-shrink:0}
+.sp-inner{position:absolute;left:0;bottom:0;width:104px;height:300px;transform-origin:bottom left}
+.spr{position:absolute;left:0;bottom:0;width:104px;height:186px;display:flex;align-items:flex-end;justify-content:center;font-size:88px;line-height:1}
+.spr img{width:96px;height:96px;object-fit:cover;border-radius:50%;border:3px solid var(--gold)}
+.px{position:absolute;image-rendering:pixelated;background-size:100% 100%;background-repeat:no-repeat}
+.jumper .spr{animation:jMove 2.8s steps(9) infinite}
+@keyframes jMove{0%,20%{transform:translateY(0)}42%{transform:translateY(-120px)}62%,100%{transform:translateY(0)}}
+.qblock{left:28px;top:38px;width:48px;height:48px;background-image:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAt0lEQVR4nGNUEpD5z0ABYGFgYGC4e6eKZI27Fu9kyGw8CzGAgYGB4fnNf0RplDSMZ3h+fiGqC2Cgzn8JQ9PGGAYGBgaGJVHbUDTGLPNiYGBgYEiVc2WY/Wg3w+VTuxkYGBgYmJAVoWuOWeYF1wgTa9oYg9sF6LYRA5gIKUB2DckGENJMlAsIAaxhAAPEhAVBL6BHJ0kGEANQDKjzX4IiiZwOcKnBmpDwAXQ1LAwMkIxBLmCkNDsDAIkUO/4dnDk7AAAAAElFTkSuQmCC);z-index:3;animation:blockBump 2.8s steps(3) infinite}
+@keyframes blockBump{0%,40%{transform:translateY(0)}44%{transform:translateY(-9px)}50%,100%{transform:translateY(0)}}
+.gift{left:31px;top:44px;width:42px;height:39px;background-image:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA4AAAANCAYAAACZ3F9/AAAAmklEQVR4nGNgQAPPjk75/+zolP+4+FgBPg3ompnwmoQHMOaKm2N1RuW6WAYGBgaG9qDFWDWyMDAwMGRqauM0GZvc9OtXIRqnX7+KaSODEQMuOQYGBgaWyS9PMuaKm//HZSu6+PTrVxkmvzzJSH7gMDBgBjUhIGWdw8jCwAAJOXQnCbRC/Pih+hyGUxkYKIhHsjWyoDsBBghFBwCNZUJnNZgB9wAAAABJRU5ErkJggg==);z-index:2;opacity:0;animation:giftPop 2.8s steps(8) infinite}
+@keyframes giftPop{0%,42%{opacity:0;transform:translateY(0)}46%{opacity:1;transform:translateY(-10px)}70%{opacity:1;transform:translateY(-52px)}86%{opacity:1;transform:translateY(-58px)}95%,100%{opacity:0;transform:translateY(-58px)}}
+.lifter .spr{animation:lBob 1.8s ease-in-out infinite}
+@keyframes lBob{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+.cake-prop{left:20px;top:128px;width:63px;height:60px;background-image:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABUAAAAUCAYAAABiS3YzAAABEElEQVR4nGNgQANKAjL//7+Z9l9JQOY/qWIwwIQuQA2A3dBVy8gXw2loyh7yxXAZ+vz0HLLFsAIlAZn//3/9gEeAkoDM///TFvy/puGGGVFI6nC6FKYA5gIY//qkZShqcKmDAUZkxXefXSfOO1iAspQmw70PTxgxXEotgGLo1y2n4TSpbGTAgm4LugIGBgYG7jePGL5uwXQRLnGs3v8kfQ3V5SJyaAZhimO4FBZ7b67dg4he42B4w3APq4Y3DAwMDK+wyykJyPy/9+EJIyOlsY4OlKU0aRj73ZrhDDCaGmy4S5+fX4jVVlLFGRgYGBiVBGT+O7HIEOszgmDfnycMjM+OTsEoECgFLJdP7aa2mQwAJMSm/5nrk1QAAAAASUVORK5CYII=);z-index:3;animation:cakeMove 3.6s steps(10) infinite}
+@keyframes cakeMove{0%,8%{transform:translateY(0)}30%,62%{transform:translateY(-40px)}84%,100%{transform:translateY(0)}}
+.sparks{position:absolute;left:0;top:30px;width:104px;text-align:center;font-size:1.3rem;opacity:0;white-space:nowrap;animation:sparkle 3.6s steps(6) infinite}
+@keyframes sparkle{0%,30%{opacity:0}34%,60%{opacity:1}66%,100%{opacity:0}}
+@media (max-width:480px){.photo-frame{width:168px;height:224px}.sprite-col{width:84px;height:240px}.sp-inner{transform:scale(.8)}.stage{gap:4px}}
+.photo-frame img{width:100%;height:100%;object-fit:cover;display:block}
+.photo-cap{font-family:'Cormorant Garamond',serif;font-style:italic;color:var(--gold);font-size:1.4rem;margin:12px 0 22px;opacity:0;animation:stanzaIn 1s ease forwards}
+.intro-avatar{width:170px;height:170px;border-radius:50%;border:3px solid var(--gold);object-fit:cover;background:var(--card);box-shadow:0 10px 30px rgba(230,197,148,.25);margin:10px 0}
+.intro-text{font-size:1.2rem;line-height:1.7;max-width:340px;margin:18px 0 24px;direction:ltr}
+#intro-section{display:none;flex-direction:column;align-items:center;width:100%}
+.option-wrap{display:flex;flex-direction:column;align-items:center}
+.option-label{margin-top:10px;font-size:.95rem;font-weight:700;color:var(--muted);direction:ltr;text-align:center}
+.person-label{color:var(--gold)}
+.option-card{width:160px;height:220px;background:var(--card);border:2px solid rgba(230,197,148,.3);border-radius:18px;overflow:hidden;cursor:pointer;transition:all .35s ease;box-shadow:0 8px 20px rgba(0,0,0,.5)}
+.option-card:hover{transform:translateY(-8px) scale(1.03);border-color:var(--gold);box-shadow:0 12px 25px rgba(230,197,148,.3)}
+.option-card img{width:100%;height:100%;object-fit:cover}
+.btn-back{background:transparent;color:var(--gold);border:1px solid var(--gold);padding:10px 25px;font-size:1rem;border-radius:20px;cursor:pointer;transition:all .3s;font-family:inherit;margin-top:10px}
+.btn-back:hover{background:var(--gold);color:#150204}
+#cups-game-section{display:none;flex-direction:column;align-items:center;width:100%}
+.cups-status{color:var(--muted);font-size:1.15rem;font-weight:700;margin-bottom:20px;min-height:1.6em}
+.cups-stage{position:relative;width:290px;height:200px;margin:30px auto 25px;border-bottom:3px solid var(--gold)}
+.cup-wrap{position:absolute;bottom:0;width:70px;height:110px;transition:left .35s ease-in-out}
+.cup{position:absolute;inset:0;background:linear-gradient(90deg,#8a1f4a,#c2416f 50%,#8a1f4a);clip-path:polygon(8% 0,92% 0,100% 100%,0 100%);cursor:pointer;transition:transform .4s ease;z-index:2}
+.cup::after{content:'';position:absolute;top:0;left:0;right:0;height:14px;background:var(--gold)}
+.cup.lift{transform:translateY(-80px)}
+.ball{position:absolute;bottom:0;left:2px;width:66px;height:66px;border-radius:50%;border:2px solid var(--gold);background:var(--card) center/cover;display:none;font-size:2.4rem;text-align:center;line-height:62px}
+.btn-start{background:var(--gold);color:#150204;border:none;padding:12px 34px;font-size:1.1rem;font-weight:700;border-radius:25px;cursor:pointer;font-family:inherit}
+.btn-start:disabled{opacity:.4;cursor:default}
+#road-game-section{display:none;flex-direction:column;align-items:center;width:100%}
+.road-board{position:relative;width:320px;height:432px;border:2px dashed var(--gold);border-radius:16px;overflow:hidden;background:#150510;margin-bottom:12px;touch-action:manipulation}
+.lane{position:absolute;left:0;width:100%;height:48px;background:#241a2b;border-top:2px dashed rgba(255,255,255,.22)}
+.lane.start{background:#3a1330;border:none;color:var(--muted);font-size:.8rem;display:flex;align-items:center;justify-content:center}
+.lane.goal{background:linear-gradient(90deg,#8a6a2f,var(--gold),#8a6a2f);border:none;color:#2a0a20;font-weight:700;display:flex;align-items:center;justify-content:center}
+.car{position:absolute;top:7px;left:0;font-size:2rem;line-height:1;will-change:transform}
+.road-char{position:absolute;left:142px;width:42px;height:42px;border-radius:50%;border:2px solid var(--gold);background:var(--card) center/cover;font-size:1.5rem;text-align:center;line-height:32px;z-index:5;transition:bottom .15s ease-out,left .15s ease-out}
+.dpad{display:grid;grid-template-columns:repeat(3,64px);gap:8px;justify-items:center;margin-bottom:10px}
+#road-game-section .dpad{direction:ltr}
+.btn-hop{background:var(--gold);color:#150204;border:none;width:64px;padding:10px 0;font-size:1.2rem;font-weight:700;border-radius:18px;cursor:pointer;font-family:inherit}
+.btn-hop:disabled{opacity:.4;cursor:default}
+#prize-section{display:none;flex-direction:column;align-items:center;width:100%}
+.gift-box{font-size:8rem;line-height:1;cursor:pointer;user-select:none;animation:shake 1.4s infinite;transition:transform .6s,opacity .6s;filter:drop-shadow(0 0 25px rgba(230,197,148,.6));margin:10px 0}
+@keyframes shake{0%,50%,100%{transform:rotate(0)}10%{transform:rotate(-9deg)}20%{transform:rotate(9deg)}30%{transform:rotate(-6deg)}40%{transform:rotate(6deg)}}
+.gift-box.opened{animation:none;transform:scale(2.4);opacity:0;pointer-events:none}
+#prize-card{display:none;margin-top:10px}
+#flappy-section{display:none;flex-direction:column;align-items:center;width:100%}
+#fl-canvas{width:320px;height:440px;border:2px dashed var(--gold);border-radius:16px;background:#150510;margin-bottom:12px;touch-action:manipulation;cursor:pointer;max-width:100%}
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(13,3,11,.85);backdrop-filter:blur(8px);z-index:100;justify-content:center;align-items:center}
+.modal-card{background:#2e0824;border:2px solid var(--gold);border-radius:25px;padding:30px 25px;max-width:420px;width:90%;text-align:center;box-shadow:0 15px 35px rgba(0,0,0,.7);animation:popIn .35s cubic-bezier(.175,.885,.32,1.275)}
+@keyframes popIn{0%{transform:scale(.6);opacity:0}100%{transform:scale(1);opacity:1}}
+.modal-icon{font-size:3.5rem;margin-bottom:15px}
+.modal-title{color:var(--gold);font-size:1.6rem;margin-bottom:12px;font-weight:700}
+.modal-desc{font-size:1.1rem;line-height:1.6;margin-bottom:20px}
+.code-container{display:none;background:rgba(0,0,0,.4);border:1px dashed var(--gold);border-radius:12px;padding:10px 15px;margin-bottom:20px;justify-content:space-between;align-items:center;direction:ltr}
+.code-text{font-family:monospace;font-size:1.1rem;color:var(--gold);font-weight:700;letter-spacing:1.5px}
+.btn-copy{background:var(--gold);color:#150204;border:none;padding:6px 14px;font-weight:700;border-radius:8px;cursor:pointer;font-family:inherit}
+.modal-actions{display:flex;justify-content:center;gap:12px;flex-wrap:wrap;margin-top:15px}
+.btn-modal{border:none;padding:12px 24px;font-size:1rem;font-weight:700;border-radius:25px;cursor:pointer;transition:all .3s;font-family:inherit;color:#fff}
+.btn-modal:hover{transform:translateY(-2px)}
+.btn-next{background:#28a745;box-shadow:0 5px 15px rgba(40,167,69,.4)}
+.btn-home{background:#dc3545;box-shadow:0 5px 15px rgba(220,53,69,.4)}
+.btn-ok{background:var(--gold);color:#150204}
+</style>
+</head>
+<body>
+
+<div id="stars-container"></div>
+
+<div class="main-container">
+
+  <div id="main-menu">
+    <header class="hero">
+      <h1 class="title" id="hero-title"></h1>
+      <p class="subtitle" id="hero-subtitle"></p>
+    </header>
+    <div class="cards-layout">
+      <div class="top-row">
+        <div class="icon-card" onclick="openPassword('n')">
+          <div class="icon-avatar letter-n" id="menu-initial">N</div>
+          <h3 id="menu-card1-title"></h3>
+          <p id="menu-card1-text"></p>
+        </div>
+      </div>
+      <div class="bottom-row">
+        <div class="icon-card" id="card-secret" onclick="openPassword('secret')">
+          <div class="icon-avatar">🔒</div>
+          <h3 id="menu-locked-title"></h3>
+          <p id="menu-locked-text"></p>
+        </div>
+        <div class="icon-card" id="card-games" onclick="openIntro()">
+          <div class="icon-avatar">🎮</div>
+          <h3 id="menu-games-title"></h3>
+          <p id="menu-games-text"></p>
+        </div>
+      </div>
+    </div>
+    <div class="audio-player-widget">
+      <button class="player-btn" id="play-pause-btn" onclick="togglePlay()">▶</button>
+      <div class="song-info">
+        <span class="song-title">Happy Birthday Song 🎵</span>
+        <span class="song-status" id="song-status">Paused</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- صفحة عيد الميلاد (بعد الباسورد) -->
+  <div id="birthday-section">
+    <svg class="bunting" viewBox="0 0 360 80" preserveAspectRatio="none"><path d="M0 6Q180 74 360 6" stroke="#e6c594" stroke-width="1.5" fill="none"/><polygon points="3.8,6.7 36.2,12.2 20.0,43.6" fill="#e6c594"/><polygon points="43.8,13.3 76.2,17.3 60.0,49.4" fill="#e0607e"/><polygon points="83.8,18.1 116.2,20.9 100.0,53.6" fill="#c77dff"/><polygon points="123.8,21.3 156.2,22.7 140.0,56.2" fill="#fceee9"/><polygon points="163.8,22.9 196.2,22.9 180.0,57.0" fill="#8a1f4a"/><polygon points="203.8,22.7 236.2,21.3 220.0,56.2" fill="#e6c594"/><polygon points="243.8,20.9 276.2,18.1 260.0,53.6" fill="#e0607e"/><polygon points="283.8,17.3 316.2,13.3 300.0,49.4" fill="#c77dff"/><polygon points="323.8,12.2 356.2,6.7 340.0,43.6" fill="#fceee9"/></svg>
+    <div class="balloon" style="left:3%;top:92px;background:#e6c594;animation-delay:0s"></div>
+    <div class="balloon" style="left:15%;top:150px;background:#e0607e;animation-delay:.8s;width:36px;height:46px"></div>
+    <div class="balloon" style="right:3%;top:92px;background:#c77dff;animation-delay:.4s"></div>
+    <div class="balloon" style="right:15%;top:150px;background:#f4b6c6;animation-delay:1.2s;width:36px;height:46px"></div>
+    <div class="cake-css"><div class="candles"><i></i><i></i><i></i></div><div class="tier t1"></div><div class="tier t2"></div><div class="plate"></div></div>
+    <div class="bday-title">HAPPY BIRTHDAY</div>
+    <div class="bday-name">{name}</div>
+    <div class="letter" id="bday-letter"></div>
+    <div class="stage" id="bday-stage">
+      <div class="sprite-col"><div class="sp-inner jumper">
+        <div class="px gift"></div><div class="px qblock"></div><div class="spr"></div>
+      </div></div>
+      <div class="photo-frame" id="bday-photo"><img id="bday-photo-img" src="" alt="{name}"></div>
+      <div class="sprite-col"><div class="sp-inner lifter">
+        <div class="sparks">✨ 🎉 ✨</div><div class="spr"></div><div class="px cake-prop"></div>
+      </div></div>
+      <div class="ground"></div>
+    </div>
+    <div class="photo-cap" id="bday-cap">🎂 {name} 🎂</div>
+    <button class="btn-back" onclick="closeBirthday()">Back to home 🏠</button>
+  </div>
+
+  <!-- صفحة القفل (الرسالة الخاصة) -->
+  <div id="secret-section">
+    <div class="secret-heart">❤️</div>
+    <div class="bday-title">HAPPY BIRTHDAY</div>
+    <div class="bday-name">{name}</div>
+    <div class="letter" id="secret-letter"></div>
+    <div class="song-card" id="song-card">
+      <div class="song-label" id="song-label"></div>
+      <div class="song-row">
+        <div class="vinyl"></div>
+        <div class="song-meta">
+          <div class="song-name" id="song-name"></div>
+          <div class="song-artist" id="song-artist"></div>
+          <div class="eq"><i></i><i></i><i></i><i></i><i></i></div>
+        </div>
+      </div>
+      <audio id="song-audio" preload="none"></audio>
+      <button type="button" class="song-btn" id="song-btn" onclick="playSong()">Listen 🎧</button>
+    </div>
+    <div class="deeds">
+      <div class="deed-col">
+        <div class="deed-title" id="deed-title-done"></div>
+        <div id="deeds-done"></div>
+        <div class="deed-more">
+          <span class="deed-count" id="deed-count">Show 1 item</span>
+          <button type="button" class="deed-learn" onclick="toggleDeedNote()">See more</button>
+        </div>
+        <div class="deed-note" id="deed-note"></div>
+      </div>
+      <div class="deed-col">
+        <div class="deed-title" id="deed-title-would"></div>
+        <div class="deed-slot big" id="deed-would"></div>
+      </div>
+    </div>
+    <div class="final-quote" id="quote1-wrap">
+      <div class="fq-orn">✦</div>
+      <div class="fq-l1" id="quote1-l1"></div>
+      <div class="fq-l2" id="quote1-l2"></div>
+      <div class="fq-orn fq-orn-bottom">✦</div>
+    </div>
+    <div class="keeping" id="keeping">
+      <div class="keeping-title" id="keeping-title"></div>
+      <div class="keeping-row" id="keeping-row"></div>
+    </div>
+    <div class="final-quote tshirt-wrap">
+      <div id="extra-wrap">
+        <div class="fq-orn">✦</div>
+        <p class="tshirt" id="extra-text"></p>
+        <img class="tshirt-img" id="extra-img" src="" alt="">
+      </div>
+      <div id="quote2-wrap">
+        <div class="fq-orn">✦</div>
+        <div class="fq-l1" id="quote2-l1"></div>
+        <div class="fq-l2" id="quote2-l2"></div>
+        <div class="fq-orn fq-orn-bottom">✦</div>
+      </div>
+    </div>
+    <button class="btn-back" onclick="closeSecret()">Back to home 🏠</button>
+  </div>
+
+  <!-- صفحة التمهيد قبل الألعاب -->
+  <div id="intro-section">
+    <h2 class="game-title" style="direction:ltr">This is {name} ✨</h2>
+    <img class="intro-avatar" id="intro-img" src="" alt="{name}">
+    <p class="intro-text">Help {name} complete all these levels to get the birthday gift 🎁</p>
+    <button class="btn-start" onclick="beginGames()">Got it</button>
+    <button class="btn-back" onclick="closeIntro()">Back to home 🏠</button>
+  </div>
+
+  <!-- اللعبة الأولى -->
+  <div id="catch-game-section">
+    <h2 class="game-title">Level 2: Collect {name}'s hearts 💖</h2>
+    <div class="score-box">Hearts: <span id="heart-score">0</span> / 5</div>
+    <div class="game-tip">💡 Tip: tapping the wrong item takes away 1 heart!</div>
+    <div id="catch-board" class="catch-board"></div>
+    <button class="btn-back" onclick="closeCatchGame()">Back to home 🏠</button>
+  </div>
+
+  <!-- اللعبة الثانية -->
+  <div id="game-section">
+    <h2 class="game-title">🎮 Mini Game 🎮</h2>
+    <p class="game-subtitle" id="photo-question"></p>
+    <div class="images-grid">
+      <div class="option-wrap">
+        <div class="option-card" onclick="selectAnswer(false)"><img id="moon-1-img" src="" alt="Moon 1"></div>
+        <div class="option-label" id="label-other1"></div>
+      </div>
+      <div class="option-wrap">
+        <div class="option-card" style="border-color:var(--gold)" onclick="selectAnswer(true)"><img id="person-img" src="" alt="Special Person"></div>
+        <div class="option-label person-label">{fullName}</div>
+      </div>
+      <div class="option-wrap">
+        <div class="option-card" onclick="selectAnswer(false)"><img id="moon-2-img" src="" alt="Moon 2"></div>
+        <div class="option-label" id="label-other2"></div>
+      </div>
+    </div>
+    <button class="btn-back" onclick="closeGame()">Back to home 🏠</button>
+  </div>
+
+  <!-- اللعبة الرابعة: الشخصية الطايرة -->
+  <div id="flappy-section">
+    <h2 class="game-title">Level 3: Help {name} fly ✈️</h2>
+    <p class="cups-status" id="fl-status">Tap the screen to start, then keep tapping to make {name} fly!</p>
+    <canvas id="fl-canvas" width="320" height="440"></canvas>
+    <div class="dpad" style="grid-template-columns:repeat(2,auto)">
+      <button class="btn-hop" id="fl-flap" style="width:auto;padding:10px 26px">Flap ⬆️</button>
+      <button class="btn-start" id="fl-start" onclick="startFlappy()" style="display:none">Start ▶</button>
+    </div>
+    <button class="btn-back" onclick="closeFlappy()">Back to home 🏠</button>
+  </div>
+
+  <!-- صفحة الجائزة الأخيرة -->
+  <div id="prize-section">
+    <h2 class="game-title" id="prize-title">🎁 {name}'s gift is ready! 🎁</h2>
+    <p class="cups-status" id="prize-hint">Tap the box to open it 👆</p>
+    <div class="gift-box" id="gift-box" onclick="openGift()">🎁</div>
+    <div class="modal-card" id="prize-card">
+      <div class="modal-icon" id="prize-icon"></div>
+      <div class="modal-title" id="prize-heading"></div>
+      <p class="modal-desc" id="prize-desc"></p>
+      <div id="gift-data"></div>
+      <div class="modal-actions"><button class="btn-modal btn-home" onclick="closePrize()">Back to home 🏠</button></div>
+    </div>
+  </div>
+
+  <!-- اللعبة الثالثة: عبور الطريق -->
+  <div id="road-game-section">
+    <h2 class="game-title">Level 4: Help {name} cross the road 🚗</h2>
+    <p class="cups-status" id="road-status">Press Start and get {name} to the gift! Move in any direction 🚗</p>
+    <div class="road-board" id="road-board"></div>
+    <div class="dpad"><span></span><button class="btn-hop" id="road-hop">⬆️</button><span></span><button class="btn-hop" id="road-left">⬅️</button><button class="btn-hop" id="road-down">⬇️</button><button class="btn-hop" id="road-right">➡️</button></div>
+    <button class="btn-start" id="road-start" onclick="startRoad()">Start ▶</button>
+    <button class="btn-back" onclick="closeRoad()">Back to home 🏠</button>
+  </div>
+
+  <!-- اللعبة الثانية: الكوبايات -->
+  <div id="cups-game-section">
+    <h2 class="game-title">Level 1: Find {name} 🥤</h2>
+    <p class="cups-status" id="cups-status">Press Start and watch {name} closely 👀</p>
+    <div class="cups-stage" id="cups-stage"></div>
+    <button class="btn-start" id="cups-start" onclick="startCupsRound()">Start ▶</button>
+    <button class="btn-back" onclick="closeCups()">Back to home 🏠</button>
+  </div>
+
+</div>
+
+<div class="modal-overlay" id="pw-modal">
+  <div class="modal-card" id="pw-card">
+    <div class="modal-icon">🔒</div>
+    <div class="modal-title" id="pw-title" style="direction:ltr">What's the best day of the year?</div>
+    <div class="pw-row">
+      <select class="pw-select" id="pw-day"></select>
+      <select class="pw-select" id="pw-month"></select>
+      <select class="pw-select" id="pw-year"></select>
+    </div>
+    <div class="pw-error" id="pw-error"></div>
+    <div class="modal-actions">
+      <button class="btn-modal btn-ok" onclick="checkPassword()">Unlock 🔓</button>
+      <button class="btn-modal btn-home" onclick="closePassword()">Cancel</button>
+    </div>
+  </div>
+</div>
+
+<div class="modal-overlay" id="result-modal">
+  <div class="modal-card">
+    <div class="modal-icon" id="modal-icon">🎉</div>
+    <div class="modal-title" id="modal-title"></div>
+    <p class="modal-desc" id="modal-desc"></p>
+    <div class="code-container" id="code-container">
+      <span class="code-text" id="spotify-code"></span>
+      <button class="btn-copy" id="btn-copy" onclick="copyCode()">Copy</button>
+    </div>
+    <div class="modal-actions" id="modal-actions"></div>
+  </div>
+</div>
+
+<script>
+/* ========== 1. تجهيز الإعدادات (مفيش حاجة هنا محتاجة تعديل — كله بيتعدّل من CONFIG فوق) ========== */
+const T = s => String(s == null ? '' : s).replace(/\{fullName\}/g, CONFIG.fullName).replace(/\{name\}/g, CONFIG.name);
+const NAME = CONFIG.name;
+const CHAR_EMOJI = CONFIG.character.emoji || '🙂';
+const CARTOON_URL = (CONFIG.character.image || '').trim();     // '' = استخدم الإيموجي
+function svgUrl(w, h, inner) {
+  return 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(
+    `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${w} ${h}" width="${w}" height="${h}">${inner}</svg>`);
+}
+const esc = s => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+/* صورة بديلة (إيموجي أصفر + اسم الصورة) لو الصورة فاضية */
+function placeholder(label, w, h) {
+  return svgUrl(w, h,
+    `<defs><linearGradient id="g" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#48143a"/><stop offset="1" stop-color="#240a1d"/></linearGradient></defs>` +
+    `<rect width="${w}" height="${h}" fill="url(#g)"/>` +
+    `<rect x="6" y="6" width="${w - 12}" height="${h - 12}" rx="14" fill="none" stroke="#e6c594" stroke-opacity=".5" stroke-width="3" stroke-dasharray="10 8"/>` +
+    `<text x="${w / 2}" y="${h / 2 - 6}" font-size="${Math.min(w, h) * .38}" text-anchor="middle" dominant-baseline="central">${esc(CHAR_EMOJI)}</text>` +
+    `<text x="${w / 2}" y="${h / 2 + Math.min(w, h) * .3}" font-size="${Math.max(16, Math.min(w, h) * .075)}" fill="#e6c594" text-anchor="middle" font-family="Arial,sans-serif" font-weight="bold">${esc(label)}</text>`);
+}
+const img = (v, label, w = 320, h = 440) => (v && String(v).trim()) ? String(v).trim() : placeholder(label, w, h);
+const CHAR_URL = CARTOON_URL || svgUrl(200, 200,
+  `<circle cx="100" cy="100" r="98" fill="#48143a"/><text x="100" y="104" font-size="120" text-anchor="middle" dominant-baseline="central">${esc(CHAR_EMOJI)}</text>`);
+
+const PERSON_IMAGE_URL = img(CONFIG.photos.main, 'Photo 1');
+const MOON_1_IMAGE_URL = img(CONFIG.photos.other1, 'Photo 2');
+const MOON_2_IMAGE_URL = img(CONFIG.photos.other2, 'Photo 3');
+const BIRTHDAY_PHOTO_URL = CONFIG.photos.birthdayPage ? img(CONFIG.photos.birthdayPage, 'Photo 1') : PERSON_IMAGE_URL;
+const PASSWORD_DATE = CONFIG.passwords.birthday;
+const SECRET_DATE = CONFIG.passwords.secret;
+const BIRTHDAY_MESSAGE = T(CONFIG.messages.birthday);
+const SECRET_MESSAGE = T(CONFIG.messages.secret);
+const SPOTIFY_CODE = CONFIG.gift.code || '';
+
+/* يملّا الصفحة من CONFIG (بيشتغل مرة واحدة في آخر السكريبت) */
+function applyConfig() {
+  const g = id => document.getElementById(id), C = CONFIG;
+  /* نصوص ثابتة فيها {name} */
+  const w = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT), nodes = [];
+  while (w.nextNode()) nodes.push(w.currentNode);
+  nodes.forEach(n => { if (n.parentNode.tagName !== 'SCRIPT' && n.nodeValue.includes('{')) n.nodeValue = T(n.nodeValue); });
+  document.querySelectorAll('[alt]').forEach(e => e.alt = T(e.alt));
+
+  document.title = T(C.pageTitle);
+  g('hero-title').textContent = T(C.heroTitle);
+  g('hero-subtitle').textContent = T(C.heroSubtitle);
+  g('menu-initial').textContent = (C.name || 'N').trim().charAt(0).toUpperCase();
+  [['card1', 'menu-card1'], ['locked', 'menu-locked'], ['games', 'menu-games']].forEach(([k, id]) => {
+    g(id + '-title').textContent = T(C.menu[k].title);
+    g(id + '-text').textContent = T(C.menu[k].text);
+  });
+  if (C.features.secretPage === false) g('card-secret').style.display = 'none';
+  if (C.features.miniGames === false) g('card-games').style.display = 'none';
+
+  g('person-img').src = PERSON_IMAGE_URL;
+  g('moon-1-img').src = MOON_1_IMAGE_URL;
+  g('moon-2-img').src = MOON_2_IMAGE_URL;
+  g('label-other1').textContent = T(C.photos.other1Label);
+  g('label-other2').textContent = T(C.photos.other2Label);
+  g('photo-question').textContent = T(C.photoQuestion);
+
+  /* الشخصية في صفحة عيد الميلاد (الـ sprites) */
+  document.querySelectorAll('.spr').forEach(el => {
+    el.innerHTML = '';
+    if (CARTOON_URL) { const i = document.createElement('img'); i.src = CARTOON_URL; i.alt = ''; el.appendChild(i); }
+    else el.textContent = CHAR_EMOJI;
+  });
+
+  /* الصفحة السرية */
+  const S = C.song;
+  if (!S || !S.url) g('song-card').style.display = 'none';
+  else {
+    g('song-label').textContent = T(S.label); g('song-name').textContent = T(S.title); g('song-artist').textContent = T(S.artist);
+    g('song-audio').src = S.url;
+  }
+  g('deed-title-done').textContent = T(C.deeds.doneTitle);
+  g('deed-title-would').textContent = T(C.deeds.wouldTitle);
+  g('deed-would').textContent = T(C.deeds.would);
+  g('deed-note').textContent = T(C.deeds.note);
+  const dd = g('deeds-done'); dd.innerHTML = '';
+  (C.deeds.done || []).forEach(t => { const d = document.createElement('div'); d.className = 'deed-slot'; d.textContent = T(t); dd.appendChild(d); });
+  const q = (id, arr, wrap) => {
+    const a = (arr && arr[0]) || '', b = (arr && arr[1]) || '';
+    g(id + '-l1').textContent = T(a); g(id + '-l2').textContent = T(b);
+    if (!a && !b) g(wrap).style.display = 'none';
+  };
+  q('quote1', C.quotes.first, 'quote1-wrap');
+  q('quote2', C.quotes.last, 'quote2-wrap');
+  const items = (C.keeping && C.keeping.items) || [];
+  if (!items.length) g('keeping').style.display = 'none';
+  else {
+    g('keeping-title').textContent = T(C.keeping.title);
+    const row = g('keeping-row'); row.innerHTML = '';
+    items.forEach((it, i) => {
+      const f = document.createElement('figure'); f.className = 'keep-item';
+      const fr = document.createElement('div'); fr.className = 'keep-frame';
+      const im = document.createElement('img'); im.src = img(it.image, 'Photo ' + (4 + i), 640, 440); im.alt = T(it.caption || '');
+      fr.appendChild(im); f.appendChild(fr);
+      const c = document.createElement('figcaption'); c.textContent = T(it.caption || ''); f.appendChild(c);
+      row.appendChild(f);
+    });
+  }
+  const X = C.extra || {};
+  if (!X.text && !X.image) g('extra-wrap').style.display = 'none';
+  else {
+    g('extra-text').textContent = T(X.text);
+    if (!X.text) g('extra-text').style.display = 'none';
+    g('extra-img').src = img(X.image, 'Photo 6', 720, 309);
+  }
+
+  /* الجائزة */
+  const G = C.gift;
+  g('prize-icon').textContent = G.icon;
+  g('prize-heading').textContent = T(G.heading);
+  g('prize-desc').textContent = T(G.description);
+}
+
+
+
+
+/* ========== 2. الموسيقى ========== */
+const playBtn = document.getElementById('play-pause-btn');
+const songStatus = document.getElementById('song-status');
+/* لحن Happy Birthday بدون كلام (متولّد بالكود، مفيش ملف صوت) */
+const TUNE = (() => {
+  const N = { G4:67, A4:69, B4:71, C5:72, D5:74, E5:76, F5:77, G5:79 };
+  const seq = [
+    ['G4',.75],['G4',.25],['A4',1],['G4',1],['C5',1],['B4',2],
+    ['G4',.75],['G4',.25],['A4',1],['G4',1],['D5',1],['C5',2],
+    ['G4',.75],['G4',.25],['G5',1],['E5',1],['C5',1],['B4',1],['A4',1],
+    ['F5',.75],['F5',.25],['E5',1],['C5',1],['D5',1],['C5',2]
+  ];
+  const notes = []; let t = 0;
+  seq.forEach(([n, d]) => { notes.push([N[n], t, d]); t += d; });
+  const C = { bass: 48, ch: [60, 64, 67] }, G = { bass: 43, ch: [59, 62, 67] }, F = { bass: 41, ch: [57, 60, 65] };
+  const bars = [C, G, G, C, C, G, F, C];
+  const chords = [];
+  bars.forEach((c, i) => {
+    chords.push([c.bass, i * 3, 1.6, 'bass']);
+    c.ch.forEach(n => { chords.push([n, i * 3 + 1, .9, 'chord']); chords.push([n, i * 3 + 2, .9, 'chord']); });
+  });
+  return { notes, chords, beats: 24 };
+})();
+const BEAT = 0.52;
+let mCtx = null, mGain = null, mNext = 0, mTimer = null, mPlaying = false;
+function mNote(midi, when, dur, type, vol) {
+  const f = 440 * Math.pow(2, (midi - 69) / 12);
+  const o = mCtx.createOscillator(), o2 = mCtx.createOscillator(), g = mCtx.createGain();
+  o.type = type; o.frequency.value = f; o2.type = 'sine'; o2.frequency.value = f * 2;
+  const end = when + Math.max(dur, .25);
+  g.gain.setValueAtTime(0.0001, when);
+  g.gain.exponentialRampToValueAtTime(vol, when + .015);
+  g.gain.exponentialRampToValueAtTime(0.0001, end + .5);
+  const g2 = mCtx.createGain(); g2.gain.value = .25;
+  o.connect(g); o2.connect(g2); g2.connect(g); g.connect(mGain);
+  o.start(when); o2.start(when); o.stop(end + .6); o2.stop(end + .6);
+}
+function scheduleTune(t0) {
+  TUNE.notes.forEach(([m, b, d]) => mNote(m, t0 + b * BEAT, d * BEAT, 'triangle', .22));
+  TUNE.chords.forEach(([m, b, d, kind]) => mNote(m, t0 + b * BEAT, d * BEAT, kind === 'bass' ? 'sine' : 'triangle', kind === 'bass' ? .13 : .05));
+  return t0 + TUNE.beats * BEAT + 1.6;
+}
+function startMusic() {
+  const AC = window.AudioContext || window.webkitAudioContext;
+  if (!AC) return;
+  if (!mCtx) {
+    mCtx = new AC();
+    mGain = mCtx.createGain(); mGain.gain.value = .8; mGain.connect(mCtx.destination);
+    mNext = scheduleTune(mCtx.currentTime + .15);
+    /* حماية: المتصفح ساعات بيكمّل resume() القديم بعد ما نكون طلبنا suspend() (لو أول لمسة كانت على Mini Games مثلاً)
+       فلو السياق اشتغل وإحنا عاوزينه واقف → نسكّته ونوقفه تاني فوراً */
+    mCtx.onstatechange = () => {
+      if (mCtx.state === 'running' && !mPlaying) { mGain.gain.value = 0; mCtx.suspend(); }
+    };
+  }
+  mGain.gain.value = .8;
+  mCtx.resume();
+  clearInterval(mTimer);
+  mTimer = setInterval(() => { if (mCtx.currentTime > mNext - 2) mNext = scheduleTune(mNext); }, 400);
+}
+/* ===== مدير الموسيقى: أغنية العيد ميلاد شغالة في كل مكان ما عدا الميني جيمز،
+   وبتسكت لما الأغنية الخاصة تشتغل وبترجع لما تقف ===== */
+let bgUserPaused = false, songOn = false;
+const BG_BLOCKED = ['intro-section','catch-game-section','game-section','cups-game-section','road-game-section','flappy-section','prize-section'];
+function inMiniGames() {
+  return BG_BLOCKED.some(id => { const el = document.getElementById(id); return el && getComputedStyle(el).display !== 'none'; });
+}
+function bgShouldPlay() { return !bgUserPaused && !songOn && !inMiniGames(); }
+function syncMusic() {
+  const want = bgShouldPlay();
+  if (want && !mPlaying) {
+    startMusic(); mPlaying = true;
+    playBtn.innerText = '❚❚'; songStatus.innerText = 'Playing 🎵';
+  } else if (!want && mPlaying) {
+    clearInterval(mTimer); mGain.gain.value = 0; mCtx.suspend(); mPlaying = false;
+    playBtn.innerText = '▶'; songStatus.innerText = 'Paused';
+  }
+}
+function pauseMusic() { syncMusic(); }
+function togglePlay() {
+  if (mPlaying) { bgUserPaused = true; } else { bgUserPaused = false; }
+  syncMusic();
+}
+
+/* ========== 3. المؤثرات الصوتية ========== */
+let actx = null;
+function getCtx() {
+  const AC = window.AudioContext || window.webkitAudioContext;
+  if (!AC) return null;
+  if (!actx) actx = new AC();
+  if (actx.state === 'suspended') actx.resume();
+  return actx;
+}
+function tone(type, freq, start, dur, vol) {
+  const ctx = getCtx(); if (!ctx) return;
+  const o = ctx.createOscillator(), g = ctx.createGain();
+  o.type = type; o.frequency.value = freq;
+  const t = ctx.currentTime + start;
+  g.gain.setValueAtTime(vol, t);
+  g.gain.exponentialRampToValueAtTime(0.001, t + dur);
+  o.connect(g); g.connect(ctx.destination);
+  o.start(t); o.stop(t + dur);
+}
+function playPopSound() {
+  try {
+    const ctx = getCtx(); if (!ctx) return;
+    const o = ctx.createOscillator(), g = ctx.createGain(), n = ctx.currentTime;
+    o.type = 'sine';
+    o.frequency.setValueAtTime(600 + Math.random() * 200, n);
+    o.frequency.exponentialRampToValueAtTime(120, n + .08);
+    g.gain.setValueAtTime(.3, n);
+    g.gain.exponentialRampToValueAtTime(.001, n + .08);
+    o.connect(g); g.connect(ctx.destination);
+    o.start(n); o.stop(n + .08);
+  } catch (e) {}
+}
+function playVictorySound() {
+  try { [261.63, 329.63, 392, 523.25, 659.25, 783.99].forEach((f, i) => tone('triangle', f, i * .1, .4, .2)); } catch (e) {}
+}
+function playWrongSound() {
+  try { [220, 164.81].forEach((f, i) => tone('sawtooth', f, i * .2, .35, .25)); } catch (e) {}
+}
+
+/* ========== 4. النجوم الساقطة + إيفكت الاحتفال عند الضغط ========== */
+const starsContainer = document.getElementById('stars-container');
+const starShapes = ['★', '✦', '✧', '✨'];
+const palettes = [
+  ['#ff4d6d', '#ff758f', '#ffb3c1', '#ffffff'],
+  ['#e6c594', '#ffd700', '#fff3b0', '#ffffff'],
+  ['#a2d2ff', '#bde0fe', '#ffafcc', '#ffffff'],
+  ['#c77dff', '#e0aaff', '#ffc6ff', '#ffffff'],
+  ['#00f5d4', '#7b2cbf', '#f15bb5', '#fee440']
+];
+function triggerEffect(x, y) {
+  if (typeof confetti !== 'function') return;
+  const origin = { x: x / window.innerWidth, y: y / window.innerHeight };
+  const colors = palettes[Math.floor(Math.random() * palettes.length)];
+  if (Math.random() > .5) {
+    confetti({ particleCount: 75, spread: 90, startVelocity: 38, origin, colors, shapes: ['circle'], ticks: 180, gravity: .85 });
+  } else {
+    confetti({ particleCount: 55, spread: 75, origin, colors, shapes: ['square', 'circle'], scalar: 1.1 });
+  }
+}
+/* المربع الخيالي للعبة: أصغر مستطيل يحتوي كل عناصر اللعبة الظاهرة */
+function getGameBox() {
+  const sec = ['catch-game-section', 'game-section', 'cups-game-section', 'road-game-section', 'flappy-section', 'prize-section', 'intro-section', 'birthday-section', 'secret-section']
+    .map(id => document.getElementById(id))
+    .find(el => el.style.display === 'flex');
+  if (!sec) return null;
+  let l = Infinity, r = -Infinity;
+  [...sec.children].forEach(c => {
+    const b = c.getBoundingClientRect();
+    l = Math.min(l, b.left); r = Math.max(r, b.right);
+  });
+  return { left: l - 30, right: r + 30 };
+}
+function pickStarX() {
+  const max = window.innerWidth - 40, box = getGameBox();
+  if (!box) return Math.random() * max;
+  const leftW = Math.max(0, box.left - 40), rightStart = box.right, rightW = Math.max(0, max - box.right);
+  if (leftW + rightW < 20) return null; // مفيش مكان فاضي (موبايل) - مفيش نجوم
+  const r = Math.random() * (leftW + rightW);
+  return r < leftW ? r : rightStart + (r - leftW);
+}
+function clearStars() { starsContainer.innerHTML = ''; }
+
+function createStar() {
+  const x = pickStarX();
+  if (x === null) return;
+  const star = document.createElement('div');
+  star.className = 'falling-star';
+  star.innerText = starShapes[Math.floor(Math.random() * starShapes.length)];
+  const duration = Math.random() * 3 + 4;
+  star.style.left = x + 'px';
+  star.style.animationDuration = duration + 's';
+  star.style.fontSize = (Math.random() * 1.3 + 1) + 'rem';
+
+  const pop = (e) => {
+    e.stopPropagation(); e.preventDefault();
+    const p = e.touches && e.touches[0] ? e.touches[0] : e;
+    playPopSound();
+    triggerEffect(p.clientX, p.clientY);
+    star.remove();
+  };
+  star.addEventListener('mousedown', pop);
+  star.addEventListener('touchstart', pop, { passive: false });
+
+  starsContainer.appendChild(star);
+  setTimeout(() => star.remove(), duration * 1000);
+}
+setInterval(createStar, 350);
+
+/* ========== 5. اللعبة الأولى: جمع القلوب ========== */
+let heartScore = 0, catchInterval = null;
+const targetHeartScore = 5;
+const itemsList = [
+  { icon: '❤️', isTarget: true }, { icon: '⭐' }, { icon: '🎂' },
+  { icon: '🎈' }, { icon: '⚡' }, { icon: '🎁' }
+];
+
+function openIntro() {
+  pauseMusic();
+  $('intro-img').src = CHAR_URL;
+  $('main-menu').style.display = 'none';
+  $('intro-section').style.display = 'flex';
+  clearStars();
+}
+function closeIntro() {
+  $('intro-section').style.display = 'none';
+  $('main-menu').style.display = 'block';
+}
+function beginGames() {
+  $('intro-section').style.display = 'none';
+  goToCups();
+}
+function startCatchGame() {
+  heartScore = 0;
+  document.getElementById('heart-score').innerText = 0;
+  document.getElementById('main-menu').style.display = 'none';
+  document.getElementById('cups-game-section').style.display = 'none';
+  document.getElementById('catch-game-section').style.display = 'flex';
+  document.getElementById('catch-board').innerHTML = '';
+  clearStars();
+  clearInterval(catchInterval);
+  catchInterval = setInterval(spawnCatchItem, 380);
+}
+
+function spawnCatchItem() {
+  if (heartScore >= targetHeartScore) return;
+  const board = document.getElementById('catch-board');
+  const obj = itemsList[Math.floor(Math.random() * itemsList.length)];
+  const item = document.createElement('div');
+  item.className = 'falling-item';
+  item.innerText = obj.icon;
+  item.style.left = Math.max(10, Math.floor(Math.random() * (board.clientWidth - 40))) + 'px';
+  item.style.top = '-40px';
+  board.appendChild(item);
+
+  let top = -40;
+  const speed = 3.8 + Math.random() * 3.2;
+  const fall = setInterval(() => {
+    if (heartScore >= targetHeartScore) { clearInterval(fall); item.remove(); return; }
+    top += speed;
+    item.style.top = top + 'px';
+    if (top > board.clientHeight) { clearInterval(fall); item.remove(); }
+  }, 20);
+
+  item.onclick = (e) => {
+    e.stopPropagation();
+    clearInterval(fall);
+    const r = item.getBoundingClientRect();
+    item.remove();
+    if (obj.isTarget) {
+      playPopSound(); heartScore++;
+      triggerEffect(r.left + r.width / 2, r.top + r.height / 2);
+    } else {
+      playWrongSound(); heartScore = Math.max(0, heartScore - 1);
+    }
+    document.getElementById('heart-score').innerText = heartScore;
+    if (heartScore >= targetHeartScore) {
+      clearInterval(catchInterval);
+      setTimeout(showLevelCompleteModal, 300);
+    }
+  };
+}
+
+function showLevelCompleteModal() {
+  document.getElementById('modal-icon').innerText = '🏆🎉';
+  document.getElementById('modal-title').innerText = 'Congratulations!';
+  document.getElementById('modal-desc').innerText = 'You passed this level!';
+  document.getElementById('code-container').style.display = 'none';
+  document.getElementById('modal-actions').innerHTML =
+    '<button class="btn-modal btn-next" onclick="goToNextGame()">Next Game 🎮</button>' +
+    '<button class="btn-modal btn-home" onclick="goToHomeFromModal()">Back to home 🏠</button>';
+  playVictorySound();
+  if (typeof confetti === 'function') confetti({ particleCount: 150, spread: 90, origin: { y: .6 } });
+  document.getElementById('result-modal').style.display = 'flex';
+}
+function goToNextGame() {
+  closeModal();
+  goToFlappy();
+}
+function goToHomeFromModal() { closeModal(); closeCatchGame(); }
+function closeCatchGame() {
+  clearInterval(catchInterval);
+  document.getElementById('catch-game-section').style.display = 'none';
+  document.getElementById('main-menu').style.display = 'block';
+}
+
+/* ========== 6. اللعبة الثانية: اختيار الصورة ========== */
+function closeGame() {
+  document.getElementById('game-section').style.display = 'none';
+  document.getElementById('main-menu').style.display = 'block';
+}
+function selectAnswer(isCorrect) {
+  const okBtn = '<button class="btn-modal btn-ok" onclick="closeModal()">OK</button>';
+  const code = document.getElementById('code-container');
+  document.getElementById('modal-actions').innerHTML = okBtn;
+  if (isCorrect) {
+    document.getElementById('modal-icon').innerText = '🎉✨';
+    document.getElementById('modal-title').innerText = 'Correct!';
+    document.getElementById('modal-desc').innerText = `Your answer is correct, ${NAME}'s gift is waiting 🎁`;
+    code.style.display = 'none';
+    document.getElementById('modal-actions').innerHTML =
+      '<button class="btn-modal btn-next" onclick="goToPrize()">Open the gift 🎁</button>';
+    playVictorySound();
+    if (typeof confetti === 'function') confetti({ particleCount: 120, spread: 100, origin: { y: .6 } });
+  } else {
+    document.getElementById('modal-icon').innerText = '❌';
+    document.getElementById('modal-title').innerText = 'Wrong choice!';
+    document.getElementById('modal-desc').innerText = 'Try again';
+    code.style.display = 'none';
+    playWrongSound();
+  }
+  document.getElementById('result-modal').style.display = 'flex';
+}
+function copyCode(b) {
+  const btn = b || document.getElementById('btn-copy');
+  const done = () => {
+    btn.innerText = 'Copied!'; btn.style.background = '#1db954'; btn.style.color = '#fff';
+    setTimeout(() => { btn.innerText = 'Copy'; btn.style.background = ''; btn.style.color = ''; }, 2000);
+  };
+  if (navigator.clipboard) {
+    navigator.clipboard.writeText(SPOTIFY_CODE).then(done).catch(fallback);
+  } else fallback();
+  function fallback() {
+    const i = document.createElement('input');
+    i.value = SPOTIFY_CODE; document.body.appendChild(i); i.select();
+    try { document.execCommand('copy'); done(); } catch (e) {}
+    i.remove();
+  }
+}
+/* ========== 7. اللعبة الثالثة: الكوبايات ========== */
+const CUP_GAP = 110;
+let cups = [], cupBusy = true, ballIdx = 0, cupsToken = 0;
+const cupLevel = 1; // مستوى واحد بصعوبة متوسطة-عالية
+const sleep = ms => new Promise(r => setTimeout(r, ms));
+const $ = id => document.getElementById(id);
+
+function goToCatch() {
+  closeModal();
+  cupsToken++;
+  $('cups-game-section').style.display = 'none';
+  startCatchGame();
+}
+function goToCups() {
+  closeModal();
+  $('catch-game-section').style.display = 'none';
+  $('cups-game-section').style.display = 'flex';
+  clearStars();
+  $('cups-status').innerText = `Press Start and watch ${NAME} closely 👀`;
+  $('cups-start').disabled = false;
+  buildCups();
+}
+function closeCups() {
+  cupsToken++;
+  $('cups-game-section').style.display = 'none';
+  $('main-menu').style.display = 'block';
+}
+function buildCups() {
+  const stage = $('cups-stage');
+  stage.innerHTML = '';
+  cups = [0, 1, 2].map(i => {
+    const w = document.createElement('div');
+    w.className = 'cup-wrap';
+    w.style.left = i * CUP_GAP + 'px';
+    w.innerHTML = '<div class="ball"></div><div class="cup"></div>';
+    w.slot = i;
+    const ball = w.querySelector('.ball');
+    if (CARTOON_URL) ball.style.backgroundImage = `url("${CARTOON_URL}")`; else ball.textContent = CHAR_EMOJI;
+    w.querySelector('.cup').onclick = () => pickCup(i);
+    stage.appendChild(w);
+    return w;
+  });
+}
+async function startCupsRound() {
+  const t = ++cupsToken, alive = () => t === cupsToken;
+  cupBusy = true;
+  $('cups-start').disabled = true;
+  buildCups();
+  ballIdx = Math.floor(Math.random() * 3);
+  cups[ballIdx].querySelector('.ball').style.display = 'block';
+  $('cups-status').innerText = `Watch ${NAME} closely 👀`;
+  await sleep(500); if (!alive()) return;
+  cups[ballIdx].querySelector('.cup').classList.add('lift');
+  await sleep(1200); if (!alive()) return;
+  cups[ballIdx].querySelector('.cup').classList.remove('lift');
+  await sleep(600); if (!alive()) return;
+  $('cups-status').innerText = 'Follow the cups... 🌀';
+  const swaps = 8 + cupLevel * 2, dur = Math.max(180, 440 - cupLevel * 70);
+  cups.forEach(w => w.style.transition = `left ${dur * 0.85 / 1000}s ease-in-out`);
+  for (let k = 0; k < swaps; k++) {
+    const a = Math.floor(Math.random() * 3);
+    let b = (a + 1 + Math.floor(Math.random() * 2)) % 3;
+    [cups[a].slot, cups[b].slot] = [cups[b].slot, cups[a].slot];
+    cups[a].style.left = cups[a].slot * CUP_GAP + 'px';
+    cups[b].style.left = cups[b].slot * CUP_GAP + 'px';
+    playPopSound();
+    await sleep(dur); if (!alive()) return;
+  }
+  $('cups-status').innerText = `Which cup is ${NAME} under? Pick one 👆`;
+  cupBusy = false;
+}
+async function pickCup(i) {
+  if (cupBusy) return;
+  cupBusy = true;
+  const t = cupsToken, win = i === ballIdx;
+  cups[i].querySelector('.cup').classList.add('lift');
+  if (!win) { await sleep(600); if (t !== cupsToken) return; cups[ballIdx].querySelector('.cup').classList.add('lift'); }
+  await sleep(900); if (t !== cupsToken) return;
+  showCupsModal(win);
+}
+function showCupsModal(win) {
+  $('code-container').style.display = 'none';
+  $('modal-icon').innerText = win ? '🎉🥤' : '😔';
+  $('modal-title').innerText = win ? 'Congratulations!' : 'Wrong cup!';
+  $('modal-desc').innerText = win ? 'You passed this level!' : `Try again and keep your eyes on ${NAME}`;
+  $('modal-actions').innerHTML =
+    (win ? '<button class="btn-modal btn-next" onclick="goToCatch()">Next Game 🎮</button>'
+         : '<button class="btn-modal btn-next" onclick="cupsAgain()">Try Again 🔄</button>') +
+    '<button class="btn-modal btn-home" onclick="closeModal();closeCups()">Back to home 🏠</button>';
+  if (win) { playVictorySound(); if (typeof confetti === 'function') confetti({ particleCount: 140, spread: 90, origin: { y: .6 } }); }
+  else playWrongSound();
+  $('result-modal').style.display = 'flex';
+}
+function goToPicture() {
+  closeModal();
+  cupsToken++;
+  stopRoad(); stopFlappy();
+  $('cups-game-section').style.display = 'none';
+  $('road-game-section').style.display = 'none';
+  $('flappy-section').style.display = 'none';
+  $('game-section').style.display = 'flex';
+  clearStars();
+}
+function cupsAgain() { closeModal(); startCupsRound(); }
+
+/* ========== 8. اللعبة الثالثة: عبور الطريق ========== */
+const ROAD_W = 320, ROW = 48, LANES = 7, CYC = ROAD_W + 140;
+let roadLanes = [], roadRow = 0, roadRunning = false, roadRaf = 0, roadLast = 0, roadCharEl = null, roadX = 142, roadInvuln = false;
+const setRoadBtns = off => ['road-left', 'road-hop', 'road-down', 'road-right'].forEach(id => $(id).disabled = off);
+const roadStatus = () => $('road-status').innerText = `Crossed: ${roadRow} / ${LANES + 1}`;
+
+function goToRoad() {
+  closeModal();
+  cupsToken++;
+  stopFlappy();
+  $('flappy-section').style.display = 'none';
+  $('cups-game-section').style.display = 'none';
+  $('road-game-section').style.display = 'flex';
+  clearStars();
+  initRoad();
+}
+function stopRoad() { roadRunning = false; cancelAnimationFrame(roadRaf); }
+function closeRoad() {
+  stopRoad();
+  $('road-game-section').style.display = 'none';
+  $('main-menu').style.display = 'block';
+}
+function initRoad() {
+  stopRoad();
+  const board = $('road-board');
+  board.innerHTML = '';
+  roadRow = 0; roadLanes = []; roadX = 142; roadInvuln = false;
+  const mk = (row, cls, txt) => {
+    const d = document.createElement('div');
+    d.className = 'lane ' + cls;
+    d.style.bottom = row * ROW + 'px';
+    if (txt) d.textContent = txt;
+    board.appendChild(d);
+    return d;
+  };
+  mk(0, 'start', 'START');
+  mk(LANES + 1, 'goal', '🎁 Gift 🎁');
+  const icons = ['🚗', '🚕', '🚙', '🚌', '🚓', '🏎️'];
+  for (let i = 1; i <= LANES; i++) {
+    const lane = mk(i, 'road');
+    const count = 2;
+    const dir = Math.random() > .5 ? 1 : -1;
+    const speed = 50 + i * 6 + Math.random() * 20;
+    const base = -70 + Math.random() * CYC;
+    const cars = [];
+    for (let k = 0; k < count; k++) {
+      const el = document.createElement('div');
+      el.className = 'car';
+      el.textContent = icons[Math.floor(Math.random() * icons.length)];
+      lane.appendChild(el);
+      let x = base + k * (CYC / count);
+      while (x >= CYC - 70) x -= CYC;
+      cars.push({ el, x });
+    }
+    roadLanes.push({ dir, speed, cars });
+  }
+  roadCharEl = document.createElement('div');
+  roadCharEl.className = 'road-char';
+  charLook(true);
+  board.appendChild(roadCharEl);
+  placeChar();
+  drawCars();
+  setRoadBtns(true);
+  $('road-start').disabled = false;
+  $('road-status').innerText = `Press Start and get ${NAME} to the gift! Move in any direction 🚗`;
+}
+function placeChar() {
+  roadCharEl.style.bottom = roadRow * ROW + (ROW - 36) / 2 + 'px';
+  roadCharEl.style.left = roadX + 'px';
+}
+function charLook(normal) {
+  if (normal && CARTOON_URL) { roadCharEl.style.backgroundImage = `url("${CARTOON_URL}")`; roadCharEl.textContent = ''; }
+  else { roadCharEl.style.backgroundImage = 'none'; roadCharEl.textContent = normal ? CHAR_EMOJI : '💥'; }
+}
+function drawCars() {
+  roadLanes.forEach(L => L.cars.forEach(c => {
+    c.el.style.transform = `translateX(${c.x}px) scaleX(${L.dir > 0 ? -1 : 1})`;
+  }));
+}
+function startRoad() {
+  initRoad();
+  roadRunning = true;
+  setRoadBtns(false);
+  $('road-start').disabled = true;
+  roadStatus();
+  roadLast = performance.now();
+  roadRaf = requestAnimationFrame(roadLoop);
+}
+function roadLoop(t) {
+  if (!roadRunning) return;
+  const dt = Math.min(.05, (t - roadLast) / 1000);
+  roadLast = t;
+  roadLanes.forEach(L => L.cars.forEach(c => {
+    c.x += L.dir * L.speed * dt;
+    if (L.dir > 0 && c.x >= CYC - 70) c.x -= CYC;
+    if (L.dir < 0 && c.x <= -70) c.x += CYC;
+  }));
+  drawCars();
+  if (roadHit()) return roadCrash();
+  roadRaf = requestAnimationFrame(roadLoop);
+}
+function roadHit() {
+  if (roadRow < 1 || roadRow > LANES) return false;
+  if (roadInvuln) return false;
+  const cl = roadX + 6, cr = roadX + 30; // مساحة الشخصية
+  return roadLanes[roadRow - 1].cars.some(c => c.x + 4 < cr && c.x + 32 > cl);
+}
+function move(dx, dy) {
+  if (!roadRunning || roadInvuln) return;
+  if (dy) roadRow = Math.max(0, roadRow + dy);
+  roadX = Math.max(0, Math.min(ROAD_W - 36, roadX + dx));
+  placeChar();
+  playPopSound();
+  roadStatus();
+  if (roadRow > LANES) return roadWin();
+  if (roadHit()) roadCrash();
+}
+const hop = () => move(0, 1);
+function roadCrash() {
+  stopRoad();
+  charLook(false);
+  playWrongSound();
+  setRoadBtns(true);
+  setTimeout(() => showRoadModal(false), 800);
+}
+function roadWin() {
+  stopRoad();
+  setRoadBtns(true);
+  setTimeout(() => showRoadModal(true), 600);
+}
+function showRoadModal(win) {
+  $('code-container').style.display = 'none';
+  $('modal-icon').innerText = win ? '🎉🚗' : '💥';
+  $('modal-title').innerText = win ? 'Congratulations!' : `Oops! ${NAME} got hit!`;
+  $('modal-desc').innerText = win ? 'You passed this level!' : 'Try again and watch the cars';
+  $('modal-actions').innerHTML =
+    (win ? '<button class="btn-modal btn-next" onclick="goToPicture()">Next Game 🎮</button>'
+         : '<button class="btn-modal btn-next" onclick="closeModal();startRoad()">Try Again 🔄</button>') +
+    '<button class="btn-modal btn-home" onclick="closeModal();closeRoad()">Back to home 🏠</button>';
+  if (win) { playVictorySound(); if (typeof confetti === 'function') confetti({ particleCount: 140, spread: 90, origin: { y: .6 } }); }
+  $('result-modal').style.display = 'flex';
+}
+[['road-left', -40, 0], ['road-hop', 0, 1], ['road-down', 0, -1], ['road-right', 40, 0]].forEach(([id, dx, dy]) =>
+  $(id).addEventListener('pointerdown', e => { e.preventDefault(); move(dx, dy); }));
+document.addEventListener('keydown', e => {
+  if ($('road-game-section').style.display !== 'flex') return;
+  const k = { Space: [0, 1], ArrowUp: [0, 1], ArrowLeft: [-40, 0], ArrowRight: [40, 0], KeyA: [-40, 0], KeyD: [40, 0], KeyW: [0, 1], ArrowDown: [0, -1], KeyS: [0, -1] }[e.code];
+  if (k) { e.preventDefault(); move(k[0], k[1]); }
+});
+
+/* ========== 8.5 اللعبة الرابعة: الشخصية الطايرة ========== */
+const FL = { W: 320, H: 440, GAP: 175, PW: 52, R: 17, BX: 80, SPEED: 105, GRAV: 950, JUMP: -310, TARGET: 8 };
+const flCanvas = $('fl-canvas'), flCtx = flCanvas.getContext('2d');
+const flImg = new Image();
+if (CARTOON_URL) flImg.src = CARTOON_URL;
+let flLock = false, flEndTimer = 0;
+let flY = 220, flVy = 0, flPipes = [], flScore = 0, flSpawned = 0, flState = 'idle', flRaf = 0, flLast = 0;
+
+function goToFlappy() {
+  closeModal();
+  clearInterval(catchInterval);
+  $('catch-game-section').style.display = 'none';
+  stopRoad();
+  $('road-game-section').style.display = 'none';
+  $('flappy-section').style.display = 'flex';
+  clearStars();
+  resetFlappy();
+}
+function stopFlappy() { flState = 'idle'; cancelAnimationFrame(flRaf); }
+function closeFlappy() {
+  stopFlappy();
+  clearTimeout(flEndTimer); flLock = true;
+  $('flappy-section').style.display = 'none';
+  $('main-menu').style.display = 'block';
+}
+function resetFlappy() {
+  stopFlappy();
+  clearTimeout(flEndTimer); flLock = false;
+  flY = 220; flVy = 0; flPipes = []; flScore = 0; flSpawned = 0;
+  $('fl-start').disabled = false;
+  $('fl-status').innerText = `Tap the screen to start, then keep tapping to make ${NAME} fly!`;
+  flState = 'ready';           // واقفة مستنية أول ضغطة
+  flDraw();
+}
+function startFlappy() { resetFlappy(); }   // Try Again: يرجّع للوضع الجاهز من غير ما الطيارة تتحرك
+function beginFlight() {
+  flState = 'run';
+  $('fl-status').innerText = `Score: 0 / ${FL.TARGET}`;
+  flVy = FL.JUMP;
+  flLast = performance.now();
+  flRaf = requestAnimationFrame(flLoop);
+  playPopSound();
+}
+function flFlap() {
+  if (flLock) return;
+  if ($('result-modal').style.display === 'flex') return;
+  if (flState === 'ready') return beginFlight();
+  if (flState !== 'run') return;
+  flVy = FL.JUMP;
+  playPopSound();
+}
+function flLoop(t) {
+  if (flState !== 'run') return;
+  const dt = Math.min(.04, (t - flLast) / 1000);
+  flLast = t;
+  flVy += FL.GRAV * dt;
+  flY += flVy * dt;
+  if (flY < FL.R) { flY = FL.R; flVy = 0; }
+  const last = flPipes[flPipes.length - 1];
+  if (flSpawned < FL.TARGET && (!last || last.x < FL.W - 210) && ++flSpawned) flPipes.push({ x: FL.W + (last ? 0 : 60), gapY: 60 + Math.random() * (FL.H - 120 - FL.GAP), passed: false });
+  flPipes.forEach(p => p.x -= FL.SPEED * dt);
+  flPipes = flPipes.filter(p => p.x > -FL.PW - 10);
+  for (const p of flPipes) {
+    if (!p.passed && p.x + FL.PW < FL.BX - FL.R) {
+      p.passed = true; flScore++;
+      if (flScore >= FL.TARGET) return flEnd(true);
+      $('fl-status').innerText = `Score: ${flScore} / ${FL.TARGET}`;
+      playPopSound();
+    }
+    const hitX = FL.BX + FL.R + 4 > p.x && FL.BX - FL.R + 4 < p.x + FL.PW;
+    if (hitX && (flY - FL.R + 3 < p.gapY || flY + FL.R + 22 > p.gapY + FL.GAP)) return flEnd(false);
+  }
+  if (flY + FL.R + 24 > FL.H) return flEnd(false);
+  flDraw();
+  if (flScore >= FL.TARGET) return flEnd(true);
+  flRaf = requestAnimationFrame(flLoop);
+}
+function flEnd(win) {
+  if (flLock) return;
+  flLock = true;
+  stopFlappy();
+  flDraw();
+  $('fl-start').disabled = false;
+  if (!win) playWrongSound();
+  flEndTimer = setTimeout(() => {
+    if ($('flappy-section').style.display !== 'flex') return;
+    $('code-container').style.display = 'none';
+    $('modal-icon').innerText = win ? '🎉🕊️' : '💥';
+    $('modal-title').innerText = win ? 'Congratulations!' : `${NAME} crashed!`;
+    $('modal-desc').innerText = win ? 'You passed this level!' : 'Try again and watch your timing';
+    $('modal-actions').innerHTML =
+      (win ? '<button class="btn-modal btn-next" onclick="goToRoad()">Next Game 🎮</button>'
+           : '<button class="btn-modal btn-next" onclick="closeModal();startFlappy()">Try Again 🔄</button>') +
+      '<button class="btn-modal btn-home" onclick="closeModal();closeFlappy()">Back to home 🏠</button>';
+    if (win) { playVictorySound(); if (typeof confetti === 'function') confetti({ particleCount: 140, spread: 90, origin: { y: .6 } }); }
+    $('result-modal').style.display = 'flex';
+  }, 600);
+}
+/* طيارة صغيرة تحت الشخصية */
+const PLANE = [{"d": "M-26 -3L-38 -23Q-32 -25 -27 -23L-15 -7Z", "f": "#8a1f4a", "s": "#e6c594", "w": 1.2}, {"d": "M-33 -17L-28 -19L-30 -14Z", "f": "#fceee9"}, {"d": "M-27 2L-42 6L-31 9L-18 5Z", "f": "#6d1739", "s": "#e6c594", "w": 1}, {"d": "M-40 -4L-22 -10Q-6 -12 16 -11Q36 -10 40 0Q36 9 16 10L-22 8L-40 -1Z", "f": "#fceee9", "s": "#e6c594", "w": 2}, {"d": "M-38 0L-22 4L36 4Q38 6 34 7Q26 10 16 10L-22 8L-39 0Z", "f": "#8a1f4a"}, {"d": "M-36 0L-22 3.5L37 3.5", "s": "#e6c594", "w": 1.2}, {"d": "M-18.9 -3a0.9 0.9 0 1 0 1.8 0a0.9 0.9 0 1 0 -1.8 0Z", "f": "#b98f4f"}, {"d": "M-8.9 -5a0.9 0.9 0 1 0 1.8 0a0.9 0.9 0 1 0 -1.8 0Z", "f": "#b98f4f"}, {"d": "M11.1 -5a0.9 0.9 0 1 0 1.8 0a0.9 0.9 0 1 0 -1.8 0Z", "f": "#b98f4f"}, {"d": "M23.1 -4a0.9 0.9 0 1 0 1.8 0a0.9 0.9 0 1 0 -1.8 0Z", "f": "#b98f4f"}, {"d": "M29 -9.5Q40 -9.5 42 0Q40 9.5 29 9.5Z", "f": "#e6c594", "s": "#b98f4f", "w": 1.2}, {"d": "M33 -8L33 8M37 -6L37 6", "s": "#b98f4f", "w": 1}, {"d": "M-16 4L12 4L3 21L-24 21Z", "f": "#e6c594", "s": "#b98f4f", "w": 1.3}, {"d": "M-24 21L3 21L5.5 17L-21 17Z", "f": "#8a1f4a"}, {"d": "M-10 5L-14 20M0 5L-5 20", "s": "#b98f4f", "w": 1}, {"d": "M-6 10L-8 19", "s": "#6d1739", "w": 2}, {"d": "M-11 21a3 3 0 1 0 6 0a3 3 0 1 0 -6 0Z", "f": "#3a1230", "s": "#e6c594", "w": 1.1}, {"d": "M42 -4Q47 0 42 4Z", "f": "#8a1f4a"}];
+const PLANE_PATHS = PLANE.map(p => ({ ...p, path: new Path2D(p.d) }));
+function drawPlane(c) {
+  c.save();
+  c.translate(0, 19);
+  c.scale(.95, .95);
+  c.lineJoin = 'round'; c.lineCap = 'round';
+  PLANE_PATHS.forEach(p => {
+    if (p.f) { c.fillStyle = p.f; c.fill(p.path); }
+    if (p.s) { c.strokeStyle = p.s; c.lineWidth = p.w; c.stroke(p.path); }
+  });
+  const b = Math.sin(performance.now() / 40) * 8;            // المروحة
+  c.fillStyle = 'rgba(230,197,148,.3)'; c.beginPath(); c.ellipse(45, 0, 2.5, 9, 0, 0, Math.PI * 2); c.fill();
+  c.strokeStyle = '#e6c594'; c.lineWidth = 3;
+  c.beginPath(); c.moveTo(45, -b); c.lineTo(45, b); c.stroke();
+  c.restore();
+}
+function flDraw() {
+  const c = flCtx;
+  const bg = c.createLinearGradient(0, 0, 0, FL.H);
+  bg.addColorStop(0, '#240a1d'); bg.addColorStop(1, '#0d030b');
+  c.fillStyle = bg; c.fillRect(0, 0, FL.W, FL.H);
+  flPipes.forEach(p => {
+    const bot = p.gapY + FL.GAP;
+    c.fillStyle = '#8a1f4a';
+    c.fillRect(p.x, 0, FL.PW, p.gapY);
+    c.fillRect(p.x, bot, FL.PW, FL.H - bot);
+    c.fillStyle = '#e6c594';
+    c.fillRect(p.x - 4, p.gapY - 14, FL.PW + 8, 14);
+    c.fillRect(p.x - 4, bot, FL.PW + 8, 14);
+  });
+  c.save();
+  c.translate(FL.BX, flY);
+  c.rotate(Math.max(-.4, Math.min(.9, flVy / 600)));
+  drawPlane(c);
+  if (flImg.complete && flImg.naturalWidth > 0) {
+    c.save(); c.beginPath(); c.arc(0, 0, FL.R * 1.2, 0, Math.PI * 2); c.clip();
+    c.drawImage(flImg, -FL.R * 1.2, -FL.R * 1.2, FL.R * 2.4, FL.R * 2.4); c.restore();
+  } else {
+    c.fillStyle = '#330e29'; c.beginPath(); c.arc(0, 0, FL.R, 0, Math.PI * 2); c.fill();
+    c.font = '26px serif'; c.textAlign = 'center'; c.textBaseline = 'middle'; c.fillText(CHAR_EMOJI, 0, 2);
+  }
+  c.strokeStyle = '#e6c594'; c.lineWidth = 2; c.beginPath(); c.arc(0, 0, FL.R * 1.2, 0, Math.PI * 2); c.stroke();
+  c.restore();
+  c.fillStyle = '#fceee9'; c.font = 'bold 34px Tajawal, sans-serif'; c.textAlign = 'center'; c.textBaseline = 'alphabetic';
+  c.fillText(flScore, FL.W / 2, 50);
+  if (flState === 'ready') {
+    c.fillStyle = 'rgba(230,197,148,.95)'; c.font = 'bold 22px Tajawal, sans-serif';
+    c.fillText('Tap to start ✈️', FL.W / 2, FL.H - 70);
+  }
+}
+flCanvas.addEventListener('pointerdown', e => { e.preventDefault(); flFlap(); });
+$('fl-flap').addEventListener('pointerdown', e => { e.preventDefault(); flFlap(); });
+document.addEventListener('keydown', e => {
+  if ($('flappy-section').style.display !== 'flex') return;
+  if (e.code === 'Space' || e.code === 'ArrowUp') { e.preventDefault(); flFlap(); }
+});
+
+/* ========== 9. صفحة الجائزة ========== */
+function goToPrize() {
+  closeModal();
+  $('game-section').style.display = 'none';
+  $('prize-section').style.display = 'flex';
+  clearStars();
+  $('gift-box').className = 'gift-box';
+  $('gift-box').style.display = 'block';
+  $('prize-card').style.display = 'none';
+  $('prize-title').innerText = `🎁 ${NAME}'s gift is ready! 🎁`;
+  $('prize-hint').style.display = 'block';
+}
+function copyText(text, btn) {
+  const done = () => { const o = btn.innerText; btn.innerText = 'Copied!'; btn.style.background = '#1db954'; btn.style.color = '#fff'; setTimeout(() => { btn.innerText = o; btn.style.background = ''; btn.style.color = ''; }, 1800); };
+  const fallback = () => { const i = document.createElement('input'); i.value = text; document.body.appendChild(i); i.select(); try { document.execCommand('copy'); done(); } catch (e) {} i.remove(); };
+  if (navigator.clipboard) navigator.clipboard.writeText(text).then(done).catch(fallback); else fallback();
+}
+function copyValue(id, btn) { copyText($(id).textContent, btn); }
+
+function showClaimed() {
+  $('gift-data').innerHTML = '<p class="modal-desc" style="margin:0">The details have been removed from this gift.</p>';
+}
+function credRow(label, val) {
+  const r = document.createElement('div'); r.className = 'cred-row';
+  r.innerHTML = '<span class="cred-label"></span><span class="cred-val"></span><button class="btn-copy">Copy</button>';
+  r.children[0].textContent = label; r.children[1].textContent = val;
+  r.children[2].onclick = () => copyText(val, r.children[2]);
+  return r;
+}
+function renderPrize() {
+  const box = $('gift-data'), G = CONFIG.gift;
+  const hasSecret = !!(G.account || G.password || G.code);
+  let claimed = false; try { claimed = localStorage.getItem('gift_claimed') === '1'; } catch (e) {}
+  box.innerHTML = '';
+  if (hasSecret && G.deleteAfterClaim && claimed) return showClaimed();
+  if (G.message) { const p = document.createElement('p'); p.className = 'modal-desc'; p.style.margin = '0 0 14px'; p.textContent = T(G.message); box.appendChild(p); }
+  if (G.account) box.appendChild(credRow('Account', G.account));
+  if (G.password) box.appendChild(credRow('Password', G.password));
+  if (G.code) box.appendChild(credRow('Code', G.code));
+  if (hasSecret && G.deleteAfterClaim) {
+    const a = document.createElement('div'); a.className = 'modal-actions';
+    a.innerHTML = '<button class="btn-modal btn-next" onclick="askDeleteGift()">I\'ve got it ✅</button>';
+    box.appendChild(a);
+  }
+}
+function askDeleteGift() {
+  $('code-container').style.display = 'none';
+  $('modal-icon').innerText = '⚠️';
+  $('modal-title').innerText = 'Warning!';
+  $('modal-desc').innerText = 'Once you confirm, the details will be removed from this gift on this device. Make sure you have copied them first.';
+  $('modal-actions').innerHTML =
+    '<button class="btn-modal btn-ok" onclick="closeModal()">Cancel</button>' +
+    '<button class="btn-modal btn-home" onclick="confirmDeleteGift()">Yes, remove it 🗑️</button>';
+  $('result-modal').style.display = 'flex';
+}
+function confirmDeleteGift() {
+  closeModal();
+  try { localStorage.setItem('gift_claimed', '1'); } catch (e) {}
+  showClaimed();
+}
+function openGift() {
+  const box = $('gift-box');
+  if (box.classList.contains('opened')) return;
+  box.classList.add('opened');
+  playVictorySound();
+  let n = 0;
+  const iv = setInterval(() => {
+    if (typeof confetti === 'function') confetti({ particleCount: 90, spread: 100, origin: { x: Math.random(), y: Math.random() * .5 + .2 } });
+    if (++n > 6) clearInterval(iv);
+  }, 250);
+  setTimeout(() => {
+    box.style.display = 'none';
+    $('prize-hint').style.display = 'none';
+    $('prize-title').innerText = `🎉 Happy Birthday ${NAME}! 🎉`;
+    renderPrize();
+    $('prize-card').style.display = 'block';
+  }, 700);
+}
+function closePrize() {
+  $('prize-section').style.display = 'none';
+  $('main-menu').style.display = 'block';
+}
+
+/* ========== 10. باسورد كارت N + صفحة عيد الميلاد ========== */
+(function buildDateSelects() {
+  const months = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+  const opt = (v, t) => `<option value="${v}">${t}</option>`;
+  $('pw-day').innerHTML = opt('', 'Day') + Array.from({ length: 31 }, (_, i) => opt(i + 1, i + 1)).join('');
+  $('pw-month').innerHTML = opt('', 'Month') + months.map((m, i) => opt(i + 1, m)).join('');
+  let years = opt('', 'Year');
+  for (let y = new Date().getFullYear(); y >= 1900; y--) years += opt(y, y);
+  $('pw-year').innerHTML = years;
+})();
+function fillLetter(box, message) {
+  box.innerHTML = '';
+  const parts = message.trim().split(/\n\s*\n/);
+  parts.forEach((t, i) => {
+    const p = document.createElement('p');
+    p.className = 'stanza' + (i === parts.length - 1 ? ' sign' : '');
+    p.textContent = t;
+    p.style.animationDelay = (0.6 + i * 1.3) + 's';
+    box.appendChild(p);
+  });
+  return 0.6 + parts.length * 1.3 + 0.3;
+}
+function buildLetter() {
+  const end = fillLetter($('bday-letter'), BIRTHDAY_MESSAGE);
+  $('bday-stage').style.animationDelay = end + 's';
+  $('bday-cap').style.animationDelay = (end + 0.8) + 's';
+  $('bday-photo-img').src = BIRTHDAY_PHOTO_URL;
+}
+
+let pwTarget = 'n';
+function openPassword(target) {
+  pwTarget = target || 'n';
+  $('pw-title').innerText = T(pwTarget === 'secret' ? CONFIG.passwords.secret.question : CONFIG.passwords.birthday.question);
+  ['pw-day', 'pw-month', 'pw-year'].forEach(id => $(id).value = '');
+  $('pw-error').textContent = '';
+  $('pw-modal').style.display = 'flex';
+}
+function closePassword() { $('pw-modal').style.display = 'none'; }
+function checkPassword() {
+  const d = +$('pw-day').value, m = +$('pw-month').value, y = +$('pw-year').value;
+  if (!d || !m || !y) { $('pw-error').textContent = 'Please choose a full date 📅'; return; }
+  const ans = pwTarget === 'secret' ? SECRET_DATE : PASSWORD_DATE;
+  if (d === ans.day && m === ans.month && y === ans.year) {
+    closePassword();
+    pwTarget === 'secret' ? openSecret() : openBirthday();
+  } else {
+    $('pw-error').textContent = 'Wrong date, try again 💔';
+    playWrongSound();
+    const card = $('pw-card');
+    card.classList.remove('shake'); void card.offsetWidth; card.classList.add('shake');
+  }
+}
+function openSecret() {
+  $('deed-note').classList.remove('show');
+  startDeedCounter();
+  fillLetter($('secret-letter'), SECRET_MESSAGE);
+  $('main-menu').style.display = 'none';
+  $('secret-section').style.display = 'flex';
+  clearStars();
+  playVictorySound();
+  if (typeof confetti === 'function') confetti({ particleCount: 80, spread: 90, origin: { y: .35 }, colors: ['#ff4d6d', '#ff758f', '#ffb3c1', '#e6c594', '#ffffff'], scalar: 1.1 });
+}
+function toggleDeedNote() { $('deed-note').classList.toggle('show'); }
+let deedN = 1, deedTimer = null;
+function renderDeed() {
+  $('deed-count').textContent = 'Show ' + deedN.toLocaleString('en-US') + (deedN === 1 ? ' item' : ' items');
+}
+function deedTick() {
+  deedN += Math.floor(Math.random() * (30 + 3 * Math.sqrt(deedN))) + 1;   // قفزات عشوائية والرقم دايمًا بيكبر
+  renderDeed();
+  deedTimer = setTimeout(deedTick, 500);
+}
+function startDeedCounter() {
+  stopDeedCounter();
+  deedN = 1; renderDeed();                        // كل مرة يدخل فيها يبدأ من 1
+  deedTimer = setTimeout(deedTick, 500);
+}
+function stopDeedCounter() { clearTimeout(deedTimer); deedTimer = null; }
+function songUiOn() {
+  songOn = true;
+  document.querySelector('.song-card').classList.add('playing');
+  $('song-btn').innerText = 'Pause ⏸';
+  syncMusic();
+}
+function songUiOff() {
+  songOn = false;
+  document.querySelector('.song-card').classList.remove('playing');
+  $('song-btn').innerText = 'Listen 🎧';
+  syncMusic();
+}
+function playSong() {
+  getCtx();
+  if (songOn) { pauseSong(false); return; }
+  const au = $('song-audio');
+  const pr = au.play();
+  if (pr && pr.catch) pr.catch(() => songUiOff());
+}
+function pauseSong(reset) {
+  const au = $('song-audio');
+  au.pause(); if (reset) au.currentTime = 0;
+}
+function stopSong() { pauseSong(true); }
+(function initSong() {
+  const au = $('song-audio');
+  au.addEventListener('play', songUiOn);
+  au.addEventListener('pause', songUiOff);
+  au.addEventListener('ended', songUiOff);
+})();
+
+/* تشغيل موسيقى العيد ميلاد أول ما الموقع يفتح (المتصفح بيمنع الصوت قبل أول لمسة، فبتبدأ مع أول ضغطة) */
+(function initBgMusic() {
+  BG_BLOCKED.forEach(id => {
+    const el = document.getElementById(id);
+    if (el) new MutationObserver(syncMusic).observe(el, { attributes: true, attributeFilter: ['style', 'class'] });
+  });
+  const unlock = e => {
+    if (e && e.target && e.target.closest && e.target.closest('.audio-player-widget, .song-btn')) return;
+    if (!bgShouldPlay()) return;
+    if (!mPlaying) syncMusic();
+    else if (mCtx && mCtx.state !== 'running') mCtx.resume();
+  };
+  ['pointerdown', 'pointerup', 'touchstart', 'touchend', 'click', 'keydown'].forEach(ev => window.addEventListener(ev, unlock, { passive: true }));
+  try { syncMusic(); } catch (e) {}
+})();
+function closeSecret() {
+  stopSong();
+  stopDeedCounter();
+  $('secret-section').style.display = 'none';
+  $('main-menu').style.display = 'block';
+}
+function openBirthday() {
+  buildLetter();
+  $('main-menu').style.display = 'none';
+  $('birthday-section').style.display = 'flex';
+  clearStars();
+  playVictorySound();
+  if (typeof confetti === 'function') {
+    let n = 0;
+    const iv = setInterval(() => {
+      confetti({ particleCount: 90, spread: 100, origin: { x: Math.random(), y: Math.random() * .5 + .2 } });
+      if (++n > 5) clearInterval(iv);
+    }, 250);
+  }
+}
+function closeBirthday() {
+  $('birthday-section').style.display = 'none';
+  $('main-menu').style.display = 'block';
+}
+
+function closeModal() { document.getElementById('result-modal').style.display = 'none'; }
+
+applyConfig();
+</script>
+</body>
+</html>
